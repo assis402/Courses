@@ -42,7 +42,8 @@ namespace Courses
             services.AddIdentity<User, AccessLevels>()
                 .AddEntityFrameworkStores<Context>();
 
-            services.AddTransient<IPessoaRepositorio, GenericRepository>();
+            services.AddScoped<IAccessLevelsRepository, AccessLevelsRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.ConfigureApplicationCookie(options =>
             {

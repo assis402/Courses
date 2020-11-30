@@ -40,24 +40,20 @@ body {
     padding-bottom: 50px;
 }
 
-.title{
-    padding-top:25px;
-    padding-bottom:10px;
+.title {
+    padding-top: 25px;
+    padding-bottom: 10px;
+
 }
 
 .buttons{
     padding-top:30px;
-    padding-bottom:30ox;
+    padding-bottom:30px;
 }
 
 .fields{
     padding-top:15px;
     padding-bottom:15px;
-}
-
-.fields {
-    padding-top: 15px;
-    padding-bottom: 15px;
 }
 
 .adress, .courses, .data {

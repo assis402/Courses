@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Courses.AccessData.Interfaces
 {
-    interface IGenericRepository<TEntity> where TEntity : class
+    public interface IGenericRepository<TEntity> where TEntity : class
     {
         IQueryable<TEntity> PickAll();
         Task<TEntity> PickById(int id);
