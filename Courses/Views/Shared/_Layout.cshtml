@@ -51,7 +51,10 @@
     </nav>
 
     <div class="container body-content">
-        @RenderBody()
+        <div class="principalContent">
+            @RenderBody()
+        </div>
+        
         <hr />
         <footer>
             <p>&copy; 2020 - Cursos</p>
@@ -74,7 +77,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.pt-BR.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+    </environment>B
 
     @RenderSection("Scripts", required: false)
 </body>

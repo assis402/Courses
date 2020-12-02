@@ -100,12 +100,11 @@ namespace Courses.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(string id)
         {
             await _accessLevelsRepository.Delete(id);
             _logger.LogInformation("Nível deletado");
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "AccessLevels");
         }
     }
 }
