@@ -52,7 +52,7 @@ namespace Courses.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User
+                User user = new User
                 {
                     UserName = register.NomeUser,
                     Email = register.Email,

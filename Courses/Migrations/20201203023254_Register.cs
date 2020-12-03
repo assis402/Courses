@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Courses.Migrations
 {
-    public partial class criacao : Migration
+    public partial class Register : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,7 +19,6 @@ namespace Courses.Migrations
                     PasswordHash = table.Column<string>(nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false),
                     Nome = table.Column<string>(maxLength: 100, nullable: false),
                     CPF = table.Column<string>(nullable: false),
                     Telefone = table.Column<string>(maxLength: 30, nullable: false),
@@ -30,8 +29,7 @@ namespace Courses.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Alunos", x => x.UserId);
-                    table.UniqueConstraint("AK_Alunos_Id", x => x.Id);
+                    table.PrimaryKey("PK_Alunos", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,9 +54,9 @@ namespace Courses.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 256, nullable: false),
                     Description = table.Column<string>(maxLength: 400, nullable: false)
                 },
                 constraints: table =>
@@ -83,7 +81,7 @@ namespace Courses.Migrations
                         name: "FK_AspNetUserClaims_Alunos_UserId",
                         column: x => x.UserId,
                         principalTable: "Alunos",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -103,7 +101,7 @@ namespace Courses.Migrations
                         name: "FK_AspNetUserLogins_Alunos_UserId",
                         column: x => x.UserId,
                         principalTable: "Alunos",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -123,7 +121,7 @@ namespace Courses.Migrations
                         name: "FK_AspNetUserTokens_Alunos_UserId",
                         column: x => x.UserId,
                         principalTable: "Alunos",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -131,8 +129,7 @@ namespace Courses.Migrations
                 name: "Carteira",
                 columns: table => new
                 {
-                    WalletId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    WalletId = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     Balance = table.Column<double>(nullable: false)
                 },
@@ -143,7 +140,7 @@ namespace Courses.Migrations
                         name: "FK_Carteira_Alunos_UserId",
                         column: x => x.UserId,
                         principalTable: "Alunos",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -170,7 +167,7 @@ namespace Courses.Migrations
                         name: "FK_Curso Comprado_Alunos_UserId",
                         column: x => x.UserId,
                         principalTable: "Alunos",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -215,7 +212,7 @@ namespace Courses.Migrations
                         name: "FK_AspNetUserRoles_Alunos_UserId",
                         column: x => x.UserId,
                         principalTable: "Alunos",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 

@@ -10,7 +10,7 @@ namespace Courses.Models
 {
     public class User : IdentityUser
     {
-        public string UserId { get; set; }
+        //public string UserId { get; set; }
 
         /*public Guid GetId()
         {
@@ -21,10 +21,12 @@ namespace Courses.Models
         {
             id = value;
         }*/
-
         public string Nome { get; set; }
+
         public string CPF { get; set; }
+
         public string Telefone { get; set; }
+
         public string Email { get; set; }
         public ICollection<UserCourse> UserCourses { get; set; }
         public string Matricula { get; set; }

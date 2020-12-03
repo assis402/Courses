@@ -12,7 +12,7 @@ namespace Courses.Mapping
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasKey(u => u.UserId);
+            //builder.HasKey(u => u.UserId);
             builder.Property(u => u.Nome).IsRequired().HasMaxLength(100);
             builder.Property(u => u.CPF).IsRequired();
             builder.HasIndex(u => u.CPF).IsUnique();

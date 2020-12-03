@@ -11,48 +11,48 @@ namespace Courses.AccessData.Repositories
 {
     public class UserRepository : GenericRepository<User>, IUserRepository
     {
-        private readonly SignInManager<User> _loginManeger;
-        private readonly UserManager<User> _userManeger;
+        private readonly SignInManager<User> _loginManager;
+        private readonly UserManager<User> _userManager;
 
-        public UserRepository(Context context, SignInManager<User> loginManeger, UserManager<User> userManeger) : base(context)
+        public UserRepository(Context context, SignInManager<User> loginManager, UserManager<User> userManager) : base(context)
         {
-            _loginManeger = loginManeger;
-            _userManeger = userManeger;
+            _loginManager = loginManager;
+            _userManager = userManager;
         }
 
         public async Task<User> PickLoggedUser(ClaimsPrincipal user)
         {
-            return await _userManeger.GetUserAsync(user);
+            return await _userManager.GetUserAsync(user);
         }
 
         public async Task<IdentityResult> SaveUser(User user, string password)
         {
-            return await _userManeger.CreateAsync(user, password);
+            return await _userManager.CreateAsync(user, password);
         }
 
         public async Task AssignAccessLevel(User user, string accessLevel)
         {
-            await _userManeger.AddToRoleAsync(user, accessLevel);
+            await _userManager.AddToRoleAsync(user, accessLevel);
         }
 
         public async Task Login(User user, bool remember)
         {
-            await _loginManeger.SignInAsync(user, remember);
+            await _loginManager.SignInAsync(user, remember);
         }
 
         public async Task Logout()
         {
-            await _loginManeger.SignOutAsync();
+            await _loginManager.SignOutAsync();
         }
 
         public async Task<User> PickUserByEmail(string email)
         {
-            return await _userManeger.FindByEmailAsync(email);
+            return await _userManager.FindByEmailAsync(email);
         }
 
         public async Task UpdateUser(User user)
         {
-            await _userManeger.UpdateAsync(user);
+            await _userManager.UpdateAsync(user);
         }
     }
 }

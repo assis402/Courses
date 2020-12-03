@@ -8,6 +8,7 @@ namespace Courses.ViewModels
 {
     public class RegisterViewModel
     {
+
         [Required(ErrorMessage = "Campo Obrigatório")]
         [StringLength(100, ErrorMessage = "Use menos de 100 caracteres")]
         public string Nome { get; set; }
@@ -26,10 +27,10 @@ namespace Courses.ViewModels
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail inválido")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Campo Obrigatório")]
+        /*[Required(ErrorMessage = "Campo Obrigatório")]
         [StringLength(100, ErrorMessage = "Use menos de 100 caracteres")]
         [DataType(DataType.Password)]
-        public string Senha { get; set; }
+        public string Senha { get; set; }*/
 
     }
 }

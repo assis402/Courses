@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Courses.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20201129205951_criacao")]
-    partial class criacao
+    [Migration("20201203023254_Register")]
+    partial class Register
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,6 +34,7 @@ namespace Courses.Migrations
                         .HasMaxLength(400);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
@@ -76,7 +77,7 @@ namespace Courses.Migrations
 
             modelBuilder.Entity("Courses.Models.User", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CPF")
@@ -91,9 +92,6 @@ namespace Courses.Migrations
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
-
-                    b.Property<string>("Id")
-                        .IsRequired();
 
                     b.Property<string>("Matricula");
 
@@ -118,9 +116,7 @@ namespace Courses.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
-                    b.HasKey("UserId");
-
-                    b.HasAlternateKey("Id");
+                    b.HasKey("Id");
 
                     b.HasIndex("CPF")
                         .IsUnique();
@@ -160,9 +156,8 @@ namespace Courses.Migrations
 
             modelBuilder.Entity("Courses.Models.Wallet", b =>
                 {
-                    b.Property<int>("WalletId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("WalletId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<double>("Balance");
 
