@@ -11,13 +11,13 @@ namespace Courses.AccessData.Interfaces
 {
     public interface IUserRepository : IGenericRepository<User>
     {
-        Task<User> PickLoggedUser(ClaimsPrincipal usuario);
+        Task<User> PickLoggedUser(ClaimsPrincipal user);
         Task<IdentityResult> SaveUser(User user, string password);
         Task UpdateUser(User user);
         Task AssignAccessLevel(User user, string accessLevel);
         Task Login(User user, bool remember);
-        Task Logout();
-        Task<User> PickUserByEmail(string email);
+        Task LogOut();
+        Task<User> PickUserByMatricula(string email);
 
     }
 }

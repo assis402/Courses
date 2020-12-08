@@ -1,48 +1,74 @@
-﻿@model IEnumerable<Courses.Models.AccessLevels>
-
+﻿@model Courses.Models.User
 @{
-    ViewData["Title"] = "Níveis de acesso cadastrados";
-    var controller = this.ViewContext.RouteData.Values["controller"].ToString();
+    ViewData["Title"] = "Meus dados";
 }
 
-<p></p>
-<div class="border border-light rounded shadow">
-    <div class="container">
-        <h3 class="title">
-            <i class="fas fa-user-lock fa-lg"></i> &nbsp; <b>Níveis de Acesso</b> &nbsp;
-            <a asp-action="Create" class="btn btn-outline-secondary btn-lg" data-toggle="tooltip" data-placement="right" title="Novo nível de acesso"><i class="fas fa-plus-circle fa-lg"></i></a>
-        </h3>
+<div class="data">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="title">
+                <i class="fas fa-address-card fa-lg"></i> &nbsp; <b>Meus dados</b> &nbsp;
+                <a asp-action="Update" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="right" title="Atualizar dados"><i class="far fa-edit fa-lg"></i></a>
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="input-group col-8 fields">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-signature fa-lg"></i></span>
+                </div>
+                <input asp-for="Nome" type="text" class="form-control form-control-lg" readonly />
+            </div>
 
-        <table class="table table-striped table-hover">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">
-                        Nome
-                    </th>
-                    <th scope="col">
-                        Descrição
-                    </th>
-                    <th scope="col">Opções</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Atualizar nível de acesso"><i class="far fa-edit"></i></a> &nbsp;
-                            <a class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Excluir nível de acesso" onclick="ConfirmDeletion('@item.Id', '@item.Name', '@controller')"><i class="fas fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+            <div class="input-group col-8 fields">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-address-card fa-lg"></i></span>
+                </div>
+                <input asp-for="CPF" type="text" class="form-control form-control-lg cpf" readonly />
+            </div>
+
+            <div class="input-group col-8 fields">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-phone-square fa-lg"></i></span>
+                </div>
+                <input asp-for="Telefone" type="text" class="form-control form-control-lg telefone" readonly />
+            </div>
+
+            <div class="input-group col-8 fields">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-envelope fa-lg"></i></span>
+                </div>
+                <input asp-for="Email" type="text" class="form-control form-control-lg" readonly />
+            </div>
+
+            <div class="input-group col-8 fields">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-calendar fa-lg"></i></span>
+                </div>
+                <input asp-for="DataCriacao" type="date" class="form-control form-control-lg" readonly />
+            </div>
+
+            <div class="input-group col-8 fields">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-calendar-check fa-lg"></i></span>
+                </div>
+                <input asp-for="DataAtualizacao" type="date" class="form-control form-control-lg" readonly />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="courses">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="title">
+                <i class="fas fa-crow fa-lg"></i> &nbsp; <b>Meus cursos</b> &nbsp;
+            </h3>
+        </div>
+        <div class="card-body">
+            @*await Component.InvokeAsync("CarrosAlugados")*@
+        </div>
+
     </div>
 </div>
 
@@ -75,4 +101,16 @@
             })
         }
     </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+
+    <script>
+        $(function () {
+            $(".cpf").mask("999.999.999-99");
+            $(".telefone").mask("(99) 9 9999-9999");
+        })
+    </script>
 }
+

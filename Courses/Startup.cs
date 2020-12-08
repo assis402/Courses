@@ -44,6 +44,7 @@ namespace Courses
 
             services.AddScoped<IAccessLevelsRepository, AccessLevelsRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<SeedingService>();
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -68,12 +69,13 @@ namespace Courses
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedingService seedingService)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                seedingService.Seed();
             }
 
             app.UseHttpsRedirection();

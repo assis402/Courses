@@ -40,14 +40,14 @@ namespace Courses.AccessData.Repositories
             await _loginManager.SignInAsync(user, remember);
         }
 
-        public async Task Logout()
+        public async Task LogOut()
         {
             await _loginManager.SignOutAsync();
         }
 
-        public async Task<User> PickUserByEmail(string email)
+        public async Task<User> PickUserByMatricula(string matricula)
         {
-            return await _userManager.FindByEmailAsync(email);
+            return await _userManager.FindByNameAsync(matricula);
         }
 
         public async Task UpdateUser(User user)

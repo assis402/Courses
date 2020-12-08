@@ -18,5 +18,12 @@ namespace Courses.Models
         public AccessLevels()
         {
         }
+
+        public AccessLevels(string name, string description, string normalizedName)
+        {
+            Name = name;
+            Description = description;
+            NormalizedName = normalizedName;
+        }
     }
 }
