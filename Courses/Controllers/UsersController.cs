@@ -63,7 +63,6 @@ namespace Courses.Controllers
                     Telefone = telefone,
                     Email = register.Email,
                     DataCriacao = date
-                    
                 };
 
                 _logger.LogInformation("Tentando criar usurário");
@@ -118,6 +117,7 @@ namespace Courses.Controllers
                 Telefone = user.Telefone
 
             };
+
             _logger.LogInformation("Atualizar usuário");
             return View(updateViewModel);
         }
@@ -140,8 +140,6 @@ namespace Courses.Controllers
                     user.Telefone = updateViewModel.Telefone;
                     user.DataAtualizacao = updateViewModel.DataAtualizacao;
 
-                    //if
-
                     await _userRepository.UpdateUser(user);
 
                     return RedirectToAction("Index", "Users");
@@ -155,6 +153,8 @@ namespace Courses.Controllers
 
             return View(updateViewModel);
         }
+
+        public async Task<IActionResult> RedefinePassword ()
 
         public async Task<IActionResult> LogOut()
         {

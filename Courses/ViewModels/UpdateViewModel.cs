@@ -36,7 +36,7 @@ namespace Courses.ViewModels
         public bool ChangePassword { get; set; }
 
         //[StringLength(100, ErrorMessage = "Use menos de 100 caracteres")]
-        //[DataType(DataType.Password)]
+        [DataType(DataType.Password)]
         public string NewPassword { get; set; }
 
 
