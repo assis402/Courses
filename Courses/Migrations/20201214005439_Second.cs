@@ -2,7 +2,7 @@
 
 namespace Courses.Migrations
 {
-    public partial class ValidCPF : Migration
+    public partial class Second : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

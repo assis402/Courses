@@ -29,15 +29,8 @@ namespace Courses.ViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
-        //[StringLength(100, ErrorMessage = "Use menos de 100 caracteres")]
-        //[DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        public bool ChangePassword { get; set; }
-
-        //[StringLength(100, ErrorMessage = "Use menos de 100 caracteres")]
         [DataType(DataType.Password)]
-        public string NewPassword { get; set; }
+        public string Password { get; set; }
 
 
 

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Courses.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20201205171120_ValidCPF")]
-    partial class ValidCPF
+    [Migration("20201214005439_Second")]
+    partial class Second
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

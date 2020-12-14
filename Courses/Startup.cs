@@ -44,6 +44,7 @@ namespace Courses
 
             services.AddScoped<IAccessLevelsRepository, AccessLevelsRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IWalletRepository, WalletRepository>();
             services.AddScoped<SeedingService>();
 
             services.ConfigureApplicationCookie(options =>
@@ -60,7 +61,7 @@ namespace Courses
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
-                //options.Password.RequiredLength = 6;
+                options.Password.RequiredLength = 6;
                 //options.Password.RequiredUniqueChars = 2;
 
             });

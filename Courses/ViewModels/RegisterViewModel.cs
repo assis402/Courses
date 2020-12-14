@@ -25,10 +25,10 @@ namespace Courses.ViewModels
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail inválido")]
         public string Email { get; set; }
 
-        /*[Required(ErrorMessage = "Campo Obrigatório")]
-        [StringLength(100, ErrorMessage = "Use menos de 100 caracteres")]
-        [DataType(DataType.Password)]
-        public string Senha { get; set; }*/
+        [Required(ErrorMessage = "Campo Obrigatório")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail inválido")]
+        [Compare("Email", ErrorMessage = "Essas senhas não são iguais")]
+        public string ConfirmEmail { get; set; }
 
     }
 }

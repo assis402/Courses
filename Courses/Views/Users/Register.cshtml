@@ -46,6 +46,14 @@
                         </div>
                     </div>
 
+                    <div class="fields">
+                        <div class="form-group">
+                            <label asp-for="ConfirmEmail" class="control-label">Confirme o e-mail</label>
+                            <input asp-for="ConfirmEmail" type="email" class="form-control form-control-lg" />
+                            <span asp-validation-for="ConfirmEmail" class="text-danger"></span>
+                        </div>
+                    </div>
+
                     <div class="form-group buttons">
                         <input type="submit" value="Criar" class="btn btn-outline-success btn-lg" /> &nbsp;
                         <a asp-action="Login" asp-controller="Users" class="btn btn-link btn-lg">Já sou cadastrado</a>

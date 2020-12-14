@@ -7,10 +7,25 @@
 {
     <ul class="nav navbar-nav navbar-right">
         <li class="nav-item">
-            <text class="text-white">Olá, @UserManager.GetUserName(User) -</text>
-            <a class="btn btn-link navbar-btn navbar-link" asp-controller="Users" asp-action="LogOut">Logout</a>
+            <text class="text-white">@UserManager.GetUserName(User) &nbsp; &nbsp;</text>
+            <a class="btn btn-info" asp-controller="Users" asp-action="LogOut">Sair</a>
         </li>
     </ul>
-    
 
+
+}
+
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li class="nav-item">
+            <a class="btn btn-info navbar-btn navbar-link" asp-action="Login" asp-controller="Users">Login </a> &nbsp;<span style="color:white">|</span> &nbsp;
+        </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+        <li class="nav-item active">
+            <a class="btn btn-info navbar-btn navbar-link" asp-action="Register" asp-controller="Users">Registro</a>
+        </li>
+    </ul>
 }

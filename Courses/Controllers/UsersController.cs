@@ -62,7 +62,8 @@ namespace Courses.Controllers
                     CPF = cpf,
                     Telefone = telefone,
                     Email = register.Email,
-                    DataCriacao = date
+                    DataCriacao = date,
+                    DataAtualizacao = date
                 };
 
                 _logger.LogInformation("Tentando criar usurário");
@@ -154,7 +155,52 @@ namespace Courses.Controllers
             return View(updateViewModel);
         }
 
-        public async Task<IActionResult> RedefinePassword ()
+        [HttpGet]
+        public async Task<IActionResult> RedefinePassword(string UserId)
+        {
+            _logger.LogInformation("Verificando se o usuário existe");
+            var user = await _userRepository.PickById(UserId);
+
+            var redefinePasswordViewModel = new RedefinePasswordViewModel
+            {
+                Id = user.Id,
+                DataAtualizacao = DateTime.Now,
+                Nome = user.Nome,
+            };
+
+            _logger.LogInformation("Atualizar usuário");
+            return View(redefinePasswordViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RedefinePassword(RedefinePasswordViewModel redefinePasswordViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _logger.LogInformation("Pegando usuário pela matrícula");
+                var user = await _userRepository.PickById(redefinePasswordViewModel.Id);
+                PasswordHasher<User> passwordHasher = new PasswordHasher<User>();
+                if (passwordHasher.VerifyHashedPassword(user, user.PasswordHash, redefinePasswordViewModel.Password) != PasswordVerificationResult.Failed)
+                {
+                    _logger.LogInformation("Informações corretas. Atualizando usuário");
+
+                    user.PasswordHash = redefinePasswordViewModel.NewPassword;
+                    user.DataAtualizacao = redefinePasswordViewModel.DataAtualizacao;
+
+                    await _userRepository.UpdateUser(user);
+
+                    return RedirectToAction("Index", "Users");
+                }
+
+                _logger.LogInformation("Informações inválidas");
+                ModelState.AddModelError("", "Senha inválida");
+
+            }
+            _logger.LogError("Informações inválidas");
+
+            return View(redefinePasswordViewModel);
+        }
 
         public async Task<IActionResult> LogOut()
         {

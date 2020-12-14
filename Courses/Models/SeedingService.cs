@@ -26,8 +26,9 @@ namespace Courses.Models
 
             AccessLevels levelAluno = new AccessLevels("Aluno", "Possui acesso ao portal de cursos, podendo estar matriculado em apenas um curso", "ALUNO");
             AccessLevels levelProfessor = new AccessLevels("Professor", " ", "PROFESSOR");
+            AccessLevels levelAdministrador = new AccessLevels("Administrador", " ", "ADMINISTRADOR");
 
-            _context.AccessLevels.AddRange(levelAluno, levelProfessor);
+            _context.AccessLevels.AddRange(levelAluno, levelProfessor, levelAdministrador);
 
             _context.SaveChanges();
 
