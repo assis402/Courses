@@ -63,7 +63,7 @@ namespace Courses.Controllers
                 return NotFound();
             }
             _logger.LogError("Informações inválidas");
-            ViewData["UserId"] = new SelectList(_userRepository.PickAll(), "Id", "Email", wallet.UserId);
+            //ViewData["UserId"] = new SelectList(_userRepository.PickAll(), "Id", "Email", wallet.UserId);
             return View(wallet);
         }
 

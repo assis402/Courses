@@ -6,15 +6,15 @@
     <title>@ViewData["Title"] - Courses</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/test/bootstrap.css" />
-        <link rel="stylesheet" href="~/test/bootstrap-datepicker.css" />
-        <link rel="stylesheet" href="~/test/all.css" />
+        <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="~/test/bootstrap.min.css"/>
-        <link rel="stylesheet" href="~/test/bootstrap-datepicker.min.css" />
-        <link rel="stylesheet" href="~/test/all.css" />
+        <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css"
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
@@ -51,7 +51,7 @@
         <div class="principalContent">
             @RenderBody()
         </div>
-        
+
         <hr />
         <footer>
             <p>&copy; 2020 - Cursos</p>
@@ -59,20 +59,20 @@
     </div>
 
     <environment include="Development">
-        <script src="~/test/jquery.js"></script>
-        <script src="~/test/bootstrap.js"></script>
-        <script src="~/test/popper.js"></script>
-        <script src="~/test/bootstrap-datepicker.js"></script>
-        <script src="~/test/bootstrap-datepicker.pt-BR.js"></script>
-        <script src="~/test/moment.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.js"</script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.pt-BR.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/test/jquery.min.js"></script>
-        <script src="~/test/bootstrap.min.js"></script>
-        <script src="~/test/popper.min.js"></script>
-        <script src="~/test/bootstrap-datepicker.pt-BR.min.js"></script>
-        <script src="~/test/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"</script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.pt-BR.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 

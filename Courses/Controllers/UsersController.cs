@@ -14,12 +14,15 @@ namespace Courses.Controllers
 {
     public class UsersController : Controller
     {
+        private readonly UserManager<User> userManager;
         private readonly IUserRepository _userRepository;
+        private readonly IWalletRepository _walletRepository;
         private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IUserRepository userRepository, ILogger<UsersController> logger)
+        public UsersController(IUserRepository userRepository, IWalletRepository walletRepository, ILogger<UsersController> logger )
         {
             _userRepository = userRepository;
+            _walletRepository = walletRepository;
             _logger = logger;
         }
 
@@ -77,6 +80,13 @@ namespace Courses.Controllers
 
                     await _userRepository.AssignAccessLevel(user, accessLevel);
                     _logger.LogInformation("Atribuição concluída");
+
+                    var wallet = new Wallet() { Balance = 0, User = user, UserId = user.Id };
+                    user.Wallet = wallet;
+
+                    await _walletRepository.Insert(wallet);
+                    var test = wallet.User.Nome;
+                    _logger.LogInformation("Carteira atribuída");
 
                     _logger.LogInformation("Logando usuário");
                     await _userRepository.Login(user, false);
@@ -176,17 +186,20 @@ namespace Courses.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RedefinePassword(RedefinePasswordViewModel redefinePasswordViewModel)
         {
+            
             if (ModelState.IsValid)
             {
                 _logger.LogInformation("Pegando usuário pela matrícula");
                 var user = await _userRepository.PickById(redefinePasswordViewModel.Id);
                 PasswordHasher<User> passwordHasher = new PasswordHasher<User>();
+                DateTime date = redefinePasswordViewModel.DataAtualizacao;
+                
                 if (passwordHasher.VerifyHashedPassword(user, user.PasswordHash, redefinePasswordViewModel.Password) != PasswordVerificationResult.Failed)
                 {
                     _logger.LogInformation("Informações corretas. Atualizando usuário");
 
-                    user.PasswordHash = redefinePasswordViewModel.NewPassword;
-                    user.DataAtualizacao = redefinePasswordViewModel.DataAtualizacao;
+                    user.DataAtualizacao = date;
+                    user.PasswordHash = passwordHasher.HashPassword(user, redefinePasswordViewModel.NewPassword);
 
                     await _userRepository.UpdateUser(user);
 
