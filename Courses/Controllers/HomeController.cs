@@ -31,7 +31,7 @@ namespace Courses.Controllers
          {
             dynamic mymodel = new ExpandoObject();
             mymodel.Upgrades = await _upgradeRepository.GetLastFive().ToListAsync();
-            mymodel.Features = await _featureRepository.GetLastFiveByStatus(FeatureStatus.Proposta).ToListAsync();
+            mymodel.Features = await _featureRepository.GetByStatus(FeatureStatus.Proposta,10).ToListAsync();
             return View(mymodel);
         }
 

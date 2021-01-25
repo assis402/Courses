@@ -18,9 +18,9 @@ namespace Courses.AccessData.Repositories
             return _context.Features.Where(x => x.Status == featureStatus);
         }
 
-        public IQueryable<Feature> GetLastFiveByStatus(FeatureStatus featureStatus)
+        public IQueryable<Feature> GetByStatus(FeatureStatus featureStatus, int listSize)
         {
-            return _context.Features.Where(x => x.Status == featureStatus).OrderByDescending(f => f.FeatureId).Take(5);
+            return _context.Features.Where(x => x.Status == featureStatus).OrderByDescending(f => f.FeatureId).Take(listSize);
         }
     }
 }

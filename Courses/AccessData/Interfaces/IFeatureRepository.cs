@@ -9,6 +9,6 @@ namespace Courses.AccessData.Interfaces
     public interface IFeatureRepository : IGenericRepository<Feature>
     {
         IQueryable<Feature> GetAllByStatus(FeatureStatus featureStatus);
-        IQueryable<Feature> GetLastFiveByStatus(FeatureStatus featureStatus);
+        IQueryable<Feature> GetByStatus(FeatureStatus featureStatus, int listSize);
     }
 }
