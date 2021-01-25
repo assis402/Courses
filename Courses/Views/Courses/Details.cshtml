@@ -1,0 +1,114 @@
+﻿@model Courses.Models.Course
+
+@{
+    ViewData["Title"] = Model.Nome;
+    string controller = "Matriculation";
+}
+
+<div class="data">
+    <div class="card-deck">
+        <div class="col-md-8" style="padding-left:0px; padding-right:0px">
+            <div class="card rounded">
+                <div class="card-header" style="height: 6em">
+                    <h3 style="padding-top: 16px">
+                        <i class="fas fa-crow fa-lg"></i> &nbsp; <b>@Model.Nome</b> &nbsp;
+                    </h3>
+                </div>
+                <div class="container" style="padding-top: 15px">
+                    <div class="row">
+                        <div class="col-md-6" style="padding-right: 0">
+                            <div class="container-img">
+                                <img src="@Url.Content(Model.Foto)" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h2>Este curso inclui:</h2>
+                            <p></p>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text border-0" id="basic-addon1"><i class="fas fa-hourglass-half fa-lg"></i></span>
+                                        </div>
+                                        <span type="text" class="courseItens form-control form-control-lg border-0" style="background-color: #fdfdfd; font-size: 16px" aria-label="Username" aria-describedby="basic-addon1">@Model.CargaHoraria horas</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text border-0" id="basic-addon1"><i class="fas fa-video fa-lg"></i></span>
+                                        </div>
+                                        <span type="text" class="courseItens form-control form-control-lg border-0" style="background-color: #fdfdfd; font-size: 16px" aria-label="Username" aria-describedby="basic-addon1">15 vídeos</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p></p>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text border-0" id="basic-addon1"><i class="fas fa-language fa-lg"></i></span>
+                                        </div>
+                                        <span type="text" class="courseItens form-control form-control-lg border-0" style="background-color: #fdfdfd; font-size: 16px" aria-label="Username" aria-describedby="basic-addon1">Português</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text border-0" id="basic-addon1"><i class="fas fa-user-graduate fa-lg"></i></span>
+                                        </div>
+                                        <span type="text" class="courseItens form-control form-control-lg border-0" style="background-color: #fdfdfd; font-size: 16px" aria-label="Username" aria-describedby="basic-addon1">30 alunos</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p></p>
+                            <div class="row btn-block bottomContent">
+                                <div class="col-12">
+                                    @if (TempData["ErrorMessage"] != null)
+                                    {
+                                    <p class="alert alert-warning">@TempData["ErrorMessage"].ToString()</p>
+                                    }
+                                    <span class="badge badge-secondary btn-block" style="font-size: 25px">R$ @Model.Preco.ToString("F2")</span>
+                                    <a asp-action="Matriculate" asp-controller="Matriculation" asp-route-CourseId="@Model.CourseId" class="btn btn-outline-info btn-block" style="font-size: 25px">Matricular-se</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                    </div>
+
+                    <p class="description">@Model.Description</p>
+
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Última atualização em @Model.DataAtualizacao.ToString("dd/MM/yyy")</small>
+                </div>
+            </div>
+        </div>
+        @await Component.InvokeAsync("Teacher", Model.UserId)
+    </div>
+</div>
+
+<partial name="_ModalMatriculate" />
+
+
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script src="~/test/jquery.maskedinput.min.js"></script>
+
+<script>
+    $(function () {
+        $(".cpf").mask("999.999.999-99");
+        $(".telefone").mask("(99) 9 9999-9999");
+    })
+</script>
+
+

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Courses.Mapping;
 
@@ -13,7 +10,9 @@ namespace Courses.Models
         public DbSet<AccessLevels> AccessLevels { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<UserCourse> UserCourses { get; set; }
+        public DbSet<Matriculation> Matriculation { get; set; }
+        public DbSet<Upgrade> Upgrades { get; set; }
+        public DbSet<Feature> Features { get; set; }
 
 
         public Context(DbContextOptions<Context> options)
@@ -30,8 +29,9 @@ namespace Courses.Models
             builder.ApplyConfiguration(new AccessLevelsMap());
             builder.ApplyConfiguration(new WalletMap());
             builder.ApplyConfiguration(new CourseMap());
-            builder.ApplyConfiguration(new UserCourseMap());
-
+            builder.ApplyConfiguration(new MatriculationMap());
+            builder.ApplyConfiguration(new UpgradeMap());
+            builder.ApplyConfiguration(new FeatureMap());
         }
 
 

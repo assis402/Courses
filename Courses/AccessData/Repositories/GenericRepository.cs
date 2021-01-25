@@ -1,8 +1,6 @@
 ﻿using Courses.AccessData.Interfaces;
 using Courses.Models;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,7 +19,7 @@ namespace Courses.AccessData.Repositories
         {
             try
             {
-                var entity = await PickById(id);
+                var entity = await GetById(id);
                 _context.Set<TEntity>().Remove(entity);
                 await _context.SaveChangesAsync();
             }
@@ -36,7 +34,7 @@ namespace Courses.AccessData.Repositories
         {
             try
             {
-                var entity = await PickById(id);
+                var entity = await GetById(id);
                 _context.Set<TEntity>().Remove(entity);
                 await _context.SaveChangesAsync();
             }
@@ -61,7 +59,7 @@ namespace Courses.AccessData.Repositories
             }
         }
 
-        public IQueryable<TEntity> PickAll()
+        public IQueryable<TEntity> GetAll()
         {
             try
             {
@@ -74,7 +72,7 @@ namespace Courses.AccessData.Repositories
             }
         }
 
-        public async Task<TEntity> PickById(int id)
+        public async Task<TEntity> GetById(int id)
         {
             try
             {
@@ -87,7 +85,7 @@ namespace Courses.AccessData.Repositories
             }
         }
 
-        public async Task<TEntity> PickById(string id)
+        public async Task<TEntity> GetById(string id)
         {
             try
             {
@@ -104,7 +102,6 @@ namespace Courses.AccessData.Repositories
         {
             try
             {
-                await _context.Set<TEntity>().AddAsync(entity);
                 await _context.SaveChangesAsync();
             }
 

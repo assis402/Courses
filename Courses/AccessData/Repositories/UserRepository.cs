@@ -1,9 +1,7 @@
 ﻿using Courses.AccessData.Interfaces;
 using Courses.Models;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -13,14 +11,16 @@ namespace Courses.AccessData.Repositories
     {
         private readonly SignInManager<User> _loginManager;
         private readonly UserManager<User> _userManager;
+        private readonly Context _context;
 
         public UserRepository(Context context, SignInManager<User> loginManager, UserManager<User> userManager) : base(context)
         {
+            _context = context;
             _loginManager = loginManager;
             _userManager = userManager;
         }
 
-        public async Task<User> PickLoggedUser(ClaimsPrincipal user)
+        public async Task<User> GetLoggedUser(ClaimsPrincipal user)
         {
             return await _userManager.GetUserAsync(user);
         }
@@ -45,9 +45,9 @@ namespace Courses.AccessData.Repositories
             await _loginManager.SignOutAsync();
         }
 
-        public async Task<User> PickUserByMatricula(string matricula)
+        public async Task<User> GetUserByMatricula(string matricula)
         {
-            return await _userManager.FindByNameAsync(matricula);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Matricula == matricula);
         }
 
         public async Task UpdateUser(User user)

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Courses.Models
 {
@@ -10,10 +8,12 @@ namespace Courses.Models
         public string CourseId { get; set; }
         public string Nome { get; set; }
         public string Foto { get; set; }
+        public string Description { get; set; }
         public int CargaHoraria { get; set; }
         public DateTime DataCriacao { get; set; }
         public DateTime DataAtualizacao { get; set; }
         public double Preco { get; set; }
-        public ICollection<UserCourse> Alunos { get; set; }
+        public string UserId { get; set; }
+        public ICollection<Matriculation> Alunos { get; set; }
     }
 }

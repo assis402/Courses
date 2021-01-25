@@ -27,13 +27,13 @@ namespace Courses.Controllers
         public async Task<IActionResult> Index()
         {
             _logger.LogInformation("Listando os saldos");
-            return View(await _walletRepository.PickAll());
+            return View(await _walletRepository.GetAll());
         }
 
         public IActionResult Create()
         {
             _logger.LogInformation("Criar novo saldo");
-            ViewData["UserId"] = new SelectList(_userRepository.PickAll(), "Id", "Email");
+            ViewData["UserId"] = new SelectList(_userRepository.GetAll(), "Id", "Email");
             return View();
         }
 
@@ -48,7 +48,7 @@ namespace Courses.Controllers
                 return RedirectToAction(nameof(Index));
             }
             _logger.LogError("Informações inválidas");
-            ViewData["UserId"] = new SelectList(_userRepository.PickAll(), "Id", "Email", wallet.UserId);
+            ViewData["UserId"] = new SelectList(_userRepository.GetAll(), "Id", "Email", wallet.UserId);
             return View(wallet);
         }
 
@@ -56,7 +56,7 @@ namespace Courses.Controllers
         {
             _logger.LogInformation("Atualizar conta");
 
-            var wallet = await _walletRepository.PickById(id);
+            var wallet = await _walletRepository.GetById(id);
             if (wallet == null)
             {
                 _logger.LogError("Conta não encontrada");
@@ -84,7 +84,7 @@ namespace Courses.Controllers
                 return RedirectToAction(nameof(Index));
             }
             _logger.LogError("Informações Inválidas");
-            ViewData["UserId"] = new SelectList(await _walletRepository.PickAll(), "Id", "Email", wallet.UserId);
+            ViewData["UserId"] = new SelectList(await _walletRepository.GetAll(), "Id", "Email", wallet.UserId);
             return View(wallet);
         }
     }

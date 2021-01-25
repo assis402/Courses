@@ -1,0 +1,55 @@
+﻿@model Courses.ViewModels.MatriculateViewModel
+
+<div class="border border-light rounded shadow col-md-8">
+    <div class="container">
+        <h3 class="title"><i class="fas fa-clipboard-check"></i> &nbsp; <b>Confirmar matrícula</b></h3>
+        <hr />
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <p class="alert alert-warning">@TempData["ErrorMessage"].ToString()</p>
+        }
+        <div class="row">
+            <div class="col-md-8">
+                <form asp-action="Matriculate">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="UserWalletBalance" type="hidden" value="@Model.UserWalletBalance" />
+                    <input asp-for="Price" type="hidden" value="@Model.Price" />
+                    <input asp-for="UserId" type="hidden" value="@Model.UserId" />
+                    <input asp-for="CourseName" type="hidden" value="@Model.CourseName" />
+                    <input asp-for="CourseId" type="hidden" value="@Model.CourseId" />
+                    <div class="fields">
+                        <h5>@Model.CourseName</h5>
+                        <h5 class="fields">O valor para compra deste curso é <b>R$ @Model.Price.ToString("F2")</b></h5>
+                        <hr>
+                        <h5>Saldo em sua carteira:</h5>
+                        <div class="input-group walletBuy">
+                            <div class="input-group-prepend">
+                                <span class="form-control-plaintext" id="" style="font-size: 20px">R$ &ensp;&ensp;</span>
+                            </div>
+                            <input type="password" id="password" readonly class="form-control-plaintext" style="outline: 0; font-size: 20px" value="@Model.UserWalletBalance.ToString("F2")" />
+                            <div class="input-group-append">
+                                <button onclick="toggler(this)" class="btn" style="border: 0; box-shadow: none" type="button"><i class="fa fa-fw fa-eye"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group buttons">
+                        <input type="submit" value="Matricular-se" class="btn btn-outline-success btn-lg" /> &nbsp;
+                        <a asp-action="Index" class="btn btn-link btn-lg">Voltar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggler(e) {
+        if (e.innerHTML == '<i class="fa fa-fw fa-eye"></i>') {
+            e.innerHTML = '<i class="fa fa-fw fa-eye-slash"></i'
+            document.getElementById('password').type = "text";
+        } else {
+            e.innerHTML = '<i class="fa fa-fw fa-eye"></i>'
+            document.getElementById('password').type = "password";
+        }
+    }
+</script>

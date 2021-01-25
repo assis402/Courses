@@ -1,18 +1,35 @@
 ﻿@model Courses.Models.User
 @{
     ViewData["Title"] = "Meus dados";
+
+    var controller = "Users";
 }
 
 <div class="data">
     <div class="card-deck">
-        <div class="col-md-3,5">
+        <div class="col-md-4">
             <div class="card rounded">
                 <div class="card-header" style="height: 6em">
                     <h3 style="padding-top: 16px">
                         <i class="fas fa-address-card fa-lg"></i> &nbsp; <b>Meus dados</b>
                     </h3>
                 </div>
-                <img class="card-img-top" src="~/images/default.png" alt="Card image cap">
+                <div class="card-body" style="padding: 0;">
+                    <a class="btn btn-light secondary float-buttom" data-toggle="tooltip" data-placement="top" title="Mudar foto" onclick="ChangePhoto('@Model.Id', '@Model.Nome', '@controller')"><i class="fas fa-edit fa-lg"></i></a>
+                    @{
+                        if (Model.Foto != null)
+                        {
+                            <div class="container-img">
+                                <img src="@Url.Content(Model.Foto)" />
+                            </div>
+                        }
+                        else
+                        {
+                            <img class="card-img-top" src="~/images/default.png" alt="Card image cap">
+                        }
+                    }
+                </div>
+                
                 <div class="card-body">
                     <h4 class="card-title"><b>@Model.Nome</b></h4>
                     <p class="card-text">Aluno</p>
@@ -63,9 +80,19 @@
                         </div>
                     </li>
                 </ul>
+
                 <div class="card-body">
-                    <a asp-action="Update" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-outline-info">Editar dados</a>
-                    <a href="#" class="card-link">Another link</a>
+                    @{ if (User.IsInRole("Administrador"))
+                        {
+                            <a asp-action="Update" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-outline-info">Editar dados</a>
+                            <a asp-action="Promote" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-light" disabled>Promover</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Update" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-outline-info">Editar dados</a> <text>&nbsp; &nbsp;</text>
+                            <a asp-action="Promote" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-light">Promover</a>
+                        }
+                    }
                 </div>
                 <div class="card-footer">
                     <small class="text-muted">Última atualização em @Model.DataAtualizacao.ToString("dd/MM/yyy")</small>
@@ -73,7 +100,7 @@
             </div>
         </div>
 
-        <div class="col" style="padding-left:0px; padding-right:0px">
+        <div class="col-md-8" style="padding-left:0px; padding-right:0px">
             <div class="card rounded">
                 <div class="card-header" style="height: 6em">
                     <h3 style="padding-top: 16px">
@@ -85,95 +112,39 @@
                 </div>
             </div>
         </div>
-
-
-        @*<div class="card">
-                    <div class="card-header">
-                        <h3 class="title">
-                            <i class="fas fa-address-card fa-lg"></i> &nbsp; <b>Meus dados</b> &nbsp;
-                            <a asp-action="Update" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="right" title="Atualizar dados"><i class="far fa-edit fa-lg"></i></a>
-                        </h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="input-group col-8 fields">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-signature fa-lg"></i></span>
-                            </div>
-                            <input asp-for="Nome" type="text" class="form-control form-control-lg" readonly />
-                        </div>
-
-                        <div class="input-group col-8 fields">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="far fa-address-card fa-lg"></i></span>
-                            </div>
-                            <input asp-for="CPF" type="text" class="form-control form-control-lg cpf" readonly />
-                        </div>
-
-                        <div class="input-group col-8 fields">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-phone-square fa-lg"></i></span>
-                            </div>
-                            <input asp-for="Telefone" type="text" class="form-control form-control-lg telefone" readonly />
-                        </div>
-
-                        <div class="input-group col-8 fields">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="far fa-envelope fa-lg"></i></span>
-                            </div>
-                            <input asp-for="Email" type="text" class="form-control form-control-lg" readonly />
-                        </div>
-
-                        <div class="input-group col-8 fields">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="far fa-calendar fa-lg"></i></span>
-                            </div>
-                            <input asp-for="DataCriacao" type="date" class="form-control form-control-lg" readonly />
-                        </div>
-
-                        <div class="input-group col-8 fields">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="far fa-calendar-check fa-lg"></i></span>
-                            </div>
-                            <input asp-for="DataAtualizacao" type="date" class="form-control form-control-lg" readonly />
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        *@
     </div>
 </div>
 
 
 
-<partial name="_ModalDeletion" />
+<partial name="_ModalChangePhoto" />
 
 @{
     string dCriacao = Model.DataCriacao.ToString("dd/MM/yyy");
     string dAtualizacao = Model.DataAtualizacao.ToString("dd/MM/yyy");
 }
 
-    @section Scripts{
+@section Scripts{
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
         })
 
 
-        function ConfirmDeletion(id, nome, controller) {
+        function ChangePhoto(id, nome, controller) {
             $(".Nome").html(nome);
 
             $(".modal").modal("show");
 
-            $(".btnDelete").on('click', function () {
-                var url = "/" + controller + "/Delete/";
+            $(".btnChangePhoto").on('click', function () {
+                var url = "/" + controller + "/ChangePhoto/";
 
                 $.ajax({
                     method: "POST",
                     url: url,
                     data: { id: id },
                     success: function () {
-                        alert("Registro excluído");
+                        alert("Foto adicionada");
                         location.reload();
                     }
                 })
@@ -190,6 +161,24 @@
             $(".cpf").mask("999.999.999-99");
             $(".telefone").mask("(99) 9 9999-9999");
         })
+    </script>
+
+    <script>
+        function LoadImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $("#file").attr('src', e.target.result);
+                }
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
     </script>
 }
 

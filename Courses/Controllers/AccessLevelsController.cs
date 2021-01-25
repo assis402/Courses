@@ -26,7 +26,7 @@ namespace Courses.Controllers
         public async Task<IActionResult> Index()
         {
             _logger.LogInformation("Listando todos os registros");
-            return View(await _accessLevelsRepository.PickAll().ToListAsync());
+            return View(await _accessLevelsRepository.GetAll().ToListAsync());
         }
 
         // GET: AccessLevels/Create
@@ -69,7 +69,7 @@ namespace Courses.Controllers
                 return NotFound();
             }
 
-            var accessLevels = await _accessLevelsRepository.PickById(id);
+            var accessLevels = await _accessLevelsRepository.GetById(id);
             if (accessLevels == null)
             {
                 return NotFound();

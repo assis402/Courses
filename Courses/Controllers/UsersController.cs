@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Courses.AccessData.Interfaces;
 using Courses.ViewModels;
@@ -9,19 +7,25 @@ using Microsoft.Extensions.Logging;
 using Courses.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Courses.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IUserRepository _userRepository;
+        readonly IHostingEnvironment _hostingEnviroment;
         private readonly IWalletRepository _walletRepository;
         private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IUserRepository userRepository, IWalletRepository walletRepository, ILogger<UsersController> logger )
+        public UsersController(UserManager<User> userManager, IUserRepository userRepository, IHostingEnvironment hostingEnviroment, IWalletRepository walletRepository, ILogger<UsersController> logger)
         {
+            _userManager = userManager;
             _userRepository = userRepository;
+            _hostingEnviroment = hostingEnviroment;
             _walletRepository = walletRepository;
             _logger = logger;
         }
@@ -29,7 +33,7 @@ namespace Courses.Controllers
         public async Task<IActionResult> Index()
         {
             _logger.LogInformation("Listando informações");
-            return View(await _userRepository.PickLoggedUser(User));
+            return View(await _userRepository.GetLoggedUser(User));
         }
 
         [AllowAnonymous]
@@ -47,7 +51,7 @@ namespace Courses.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel register)
         {
-            
+
 
             if (ModelState.IsValid)
             {
@@ -59,8 +63,8 @@ namespace Courses.Controllers
                 User user = new User()
                 {
                     Matricula = generatedMatricula,
-                    UserName = generatedMatricula,
                     Nome = register.Nome,
+                    UserName = register.Nickname,
                     PasswordHash = cpf,
                     CPF = cpf,
                     Telefone = telefone,
@@ -115,7 +119,7 @@ namespace Courses.Controllers
         public async Task<IActionResult> Update(string UserId)
         {
             _logger.LogInformation("Verificando se o usuário existe");
-            var user = await _userRepository.PickById(UserId);
+            var user = await _userRepository.GetById(UserId);
 
             var updateViewModel = new UpdateViewModel
             {
@@ -126,7 +130,6 @@ namespace Courses.Controllers
                 CPF = user.CPF,
                 Email = user.Email,
                 Telefone = user.Telefone
-
             };
 
             _logger.LogInformation("Atualizar usuário");
@@ -140,7 +143,7 @@ namespace Courses.Controllers
             if (ModelState.IsValid)
             {
                 _logger.LogInformation("Pegando usuário pela matrícula");
-                var user = await _userRepository.PickById(updateViewModel.Id);
+                var user = await _userRepository.GetById(updateViewModel.Id);
                 PasswordHasher<User> passwordHasher = new PasswordHasher<User>();
                 if (passwordHasher.VerifyHashedPassword(user, user.PasswordHash, updateViewModel.Password) != PasswordVerificationResult.Failed)
                 {
@@ -166,10 +169,89 @@ namespace Courses.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Promote(string UserId)
+        {
+            _logger.LogInformation("Verificando se o usuário existe");
+            var user = await _userRepository.GetById(UserId);
+            var accessLevel = await _userManager.GetRolesAsync(user);
+            var promoteViewModel = new PromoteViewModel
+            {
+                Id = user.Id,
+                AccessLevel = accessLevel[0],
+                DataAtualizacao = DateTime.Now
+            };
+
+            _logger.LogInformation("Promovendo usuário");
+            return View(promoteViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Promote(PromoteViewModel promoteViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _logger.LogInformation("Pegando usuário pela matrícula");
+
+                var user = await _userRepository.GetById(promoteViewModel.Id);
+
+                await _userRepository.AssignAccessLevel(user, promoteViewModel.AccessLevel);
+                _logger.LogInformation("Atribuição concluída");
+
+                return RedirectToAction("Index", "Users");
+            }
+            _logger.LogError("Informações inválidas");
+
+            return View(promoteViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePhoto(string id, [Bind("Id,Foto")] User ChangePhotoUser, IFormFile file)
+        {
+            if (id != ChangePhotoUser.Id)
+            {
+                _logger.LogError("Curso não encontrado");
+                return NotFound();
+            }
+
+            var user = await _userRepository.GetById(id);
+
+            if (ModelState.IsValid)
+            {
+                if (file != null)
+                {
+                    _logger.LogInformation("Criando link da pasta");
+                    var linkUpload = Path.Combine(_hostingEnviroment.WebRootPath, "imagesUsers");
+                    string nameImg = System.Guid.NewGuid().ToString() + ".jpg";
+                    string backupNameImg = user.Foto;
+                    
+
+                    using (FileStream fileStream = new FileStream(Path.Combine(linkUpload, nameImg), FileMode.Create))
+                    {
+                        _logger.LogInformation("Copiando arquivo para a pasta");
+                        await file.CopyToAsync(fileStream);
+                        _logger.LogInformation("Arquivo copiado");
+                        user.Foto = "~/imagesUsers/" + nameImg;
+
+                        _logger.LogInformation("Atualizando usuário");
+                        await _userRepository.UpdateUser(user);
+                        if (backupNameImg != null)
+                        {
+                            System.IO.File.Delete(Path.Combine(linkUpload, backupNameImg));
+                        }
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+            }
+            return View(user);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> RedefinePassword(string UserId)
         {
             _logger.LogInformation("Verificando se o usuário existe");
-            var user = await _userRepository.PickById(UserId);
+            var user = await _userRepository.GetById(UserId);
 
             var redefinePasswordViewModel = new RedefinePasswordViewModel
             {
@@ -186,14 +268,14 @@ namespace Courses.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RedefinePassword(RedefinePasswordViewModel redefinePasswordViewModel)
         {
-            
+
             if (ModelState.IsValid)
             {
                 _logger.LogInformation("Pegando usuário pela matrícula");
-                var user = await _userRepository.PickById(redefinePasswordViewModel.Id);
+                var user = await _userRepository.GetById(redefinePasswordViewModel.Id);
                 PasswordHasher<User> passwordHasher = new PasswordHasher<User>();
                 DateTime date = redefinePasswordViewModel.DataAtualizacao;
-                
+
                 if (passwordHasher.VerifyHashedPassword(user, user.PasswordHash, redefinePasswordViewModel.Password) != PasswordVerificationResult.Failed)
                 {
                     _logger.LogInformation("Informações corretas. Atualizando usuário");
@@ -254,13 +336,13 @@ namespace Courses.Controllers
             if (ModelState.IsValid)
             {
                 _logger.LogInformation("Pegando usuário pela matrícula");
-                var user = await _userRepository.PickUserByMatricula(login.Matricula);
+                var user = await _userRepository.GetUserByMatricula(login.Matricula);
                 PasswordHasher<User> passwordHasher = new PasswordHasher<User>();
 
-                if(user != null)
+                if (user != null)
                 {
                     _logger.LogInformation("Verificando informações do usuário");
-                    if(passwordHasher.VerifyHashedPassword(user, user.PasswordHash, login.Password) != PasswordVerificationResult.Failed)
+                    if (passwordHasher.VerifyHashedPassword(user, user.PasswordHash, login.Password) != PasswordVerificationResult.Failed)
                     {
                         _logger.LogInformation("Informações corretas. Logando usurário");
                         await _userRepository.Login(user, false);

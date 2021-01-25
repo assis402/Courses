@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Courses</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/test/bootstrap.css" />
+        <link rel="stylesheet" href="~/test/bootstrap-datepicker.css" />
+        <link rel="stylesheet" href="~/test/all.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/test/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/test/bootstrap-datepicker.min.css" />
+        <link rel="stylesheet" href="~/test/all.css" />
+    </environment>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-info">
+        <div class="container">
+            <a class="navbar-brand text-white" asp-controller="Home" asp-action="Index"><i class="fas fa-crow fa-lg"></i> &nbsp; Cursos</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="btn btn-info navbar-btn navbar-link" asp-action="Index" asp-controller="Users">Minha conta</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-info navbar-btn navbar-link" asp-action="Index" asp-controller="Courses">Cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-info navbar-btn navbar-link" asp-action="Index" asp-controller="AccessLevels">Níveis de Acesso</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-info navbar-btn navbar-link" asp-action="Index" asp-controller="Wallets">Carteiras</a>
+                    </li>
+                </ul>
+
+                <partial name="_LoginPartial" />
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        <div class="principalContent">
+            @RenderBody()
+        </div>
+
+        <hr />
+        <footer>
+            <p>&copy; 2020 - Cursos</p>
+        </footer>
+    </div>
+
+    <environment include="Development">
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/test/jquery.js"></script>
+        <script src="~/test/bootstrap.js"></script>
+        <script src="~/test/popper.js"></script>
+        <script src="~/test/bootstrap-datepicker.js"></script>
+        <script src="~/test/bootstrap-datepicker.pt-BR.js"></script>
+        <script src="~/test/moment.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="~/test/jquery.min.js"></script>
+        <script src="~/test/bootstrap.min.js"></script>
+        <script src="~/test/popper.min.js"></script>
+        <script src="~/test/bootstrap-datepicker.pt-BR.min.js"></script>
+        <script src="~/test/moment.min.js"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

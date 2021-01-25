@@ -42,10 +42,14 @@ namespace Courses
             services.AddIdentity<User, AccessLevels>()
                 .AddEntityFrameworkStores<Context>();
 
+            services.AddScoped<SeedingService>();
             services.AddScoped<IAccessLevelsRepository, AccessLevelsRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IWalletRepository, WalletRepository>();
-            services.AddScoped<SeedingService>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<IUpgradeRepository, UpgradeRepository>();
+            services.AddScoped<IFeatureRepository, FeatureRepository>();
+            services.AddScoped<IMatriculationRepository, MatriculationRepository>();
 
             services.ConfigureApplicationCookie(options =>
             {

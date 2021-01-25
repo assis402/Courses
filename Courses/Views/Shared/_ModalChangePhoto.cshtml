@@ -1,0 +1,65 @@
+﻿@model Courses.Models.User
+
+<div class="modal" id="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 350px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Adicione uma foto</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="ChangePhoto" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="modal-body">
+                    <div class="container-img">
+                        @{
+                            if (Model.Foto != null)
+                            {
+                                <img src="@Url.Content(Model.Foto)" name="file" id="file" />
+                            }
+                            else
+                            {
+                                <img src="~/images/default-image.png" name="file" id="file" />
+                            }
+                        }
+                    </div>
+                    <div class="fields">
+                        <label asp-for="Foto" class="control-label">Selecione uma imagem</label>
+                        <div class="custom-file">
+                            <input type="hidden" asp-for="Id"/>
+                            <input asp-for="Foto" type="file" class="custom-file-input" name="file" id="file" onchange="LoadImage(this)" />
+                            <label asp-for="Foto" for="file" class="custom-file-label">Selecione uma imagem</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Mudar foto" class="btn btn-outline-success btn-lg btnChangePhoto"/> &nbsp;
+                    <a asp-action="Index" class="btn btn-link btn-lg">Voltar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function LoadImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $("#file").attr('src', e.target.result);
+                }
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+}

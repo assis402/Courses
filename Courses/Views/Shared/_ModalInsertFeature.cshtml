@@ -1,0 +1,45 @@
+﻿@model Courses.Models.Feature
+
+<div class="modal" id="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Adicione um recurso a ser desenvolvido</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="InsertFeature" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="modal-body">
+                    <div class="fields">
+                        <div class="form-group">
+                            <label asp-for="Title" class="control-label">Título</label>
+                            <input asp-for="Title" class="form-control form-control-lg" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="fields">
+                        <div class="form-group">
+                            <label asp-for="Complexibility" class="control-label" for="SelectCargaHoraria">Complexibilidade</label>
+                            <select asp-for="Complexibility" asp-items="Html.GetEnumSelectList<FeatureComplexibility>()" class="form-control form-control-lg"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Adicionar" class="btn btn-outline-success btn-lg btnInsertFeature"/> &nbsp;
+                    <a asp-action="Index" class="btn btn-link btn-lg">Voltar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        
+    </script>
+}

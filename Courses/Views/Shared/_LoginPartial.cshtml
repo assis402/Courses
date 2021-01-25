@@ -3,12 +3,16 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-@if (SignInManager.IsSignedIn(User))
+@{ 
+    User user = await UserManager.GetUserAsync(User);
+}
+
+@if(SignInManager.IsSignedIn(User))
 {
     <ul class="nav navbar-nav navbar-right">
         <li class="nav-item">
-            <text class="text-white">@UserManager.GetUserName(User) &nbsp; &nbsp;</text>
-            <a class="btn btn-info" asp-controller="Users" asp-action="LogOut">Sair</a>
+            <text class="text-white">Bem-vindo, &nbsp; @user.UserName &nbsp; &nbsp;</text>
+            <a class="btn btn-info" style="border: 0; box-shadow: none" asp-controller="Users" asp-action="LogOut">Sair</a>
         </li>
     </ul>
 
@@ -19,13 +23,13 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
         <li class="nav-item">
-            <a class="btn btn-info navbar-btn navbar-link" asp-action="Login" asp-controller="Users">Login </a> &nbsp;<span style="color:white">|</span> &nbsp;
+            <a class="btn btn-info navbar-btn navbar-link" style="border: 0; box-shadow: none" asp-action="Login" asp-controller="Users">Login </a> &nbsp;<span style="color:white">|</span> &nbsp;
         </li>
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
         <li class="nav-item active">
-            <a class="btn btn-info navbar-btn navbar-link" asp-action="Register" asp-controller="Users">Registro</a>
+            <a class="btn btn-info navbar-btn navbar-link" style="border: 0; box-shadow: none" asp-action="Register" asp-controller="Users">Registro</a>
         </li>
     </ul>
 }

@@ -1,0 +1,134 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@model Courses.ViewModels.CreateCourseViewModel
+@inject UserManager<User> UserManager
+
+@{
+    ViewData["Title"] = "Novo curso";
+    var user = await UserManager.GetUserAsync(User);
+}
+<p></p>
+<div class="border border-light rounded shadow col-md-10">
+    <div class="container">
+        <h3 class="title"><i class="fas fa-user-lock fa-lg"></i> &nbsp; <b>Novo curso</b></h3>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-7">
+
+                            <div class="fields">
+                                <div class="form-group">
+                                    <label asp-for="Nome" class="control-label">Título</label>
+                                    <input asp-for="Nome" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Nome" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="fields">
+                                <div class="form-group">
+                                    <label asp-for="CargaHoraria" class="control-label" for="SelectCargaHoraria">Carga Horária Total (horas)</label>
+                                    <select asp-for="CargaHoraria" class="form-control form-control-lg" id="SelectCargaHoraria">
+                                        <option>80</option>
+                                        <option>120</option>
+                                        <option>160</option>
+                                        <option>220</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="fields">
+                                <div class="form-group">
+                                    <label asp-for="Description" class="control-label">Descrição</label>
+                                    <textarea asp-for="Description" class="form-control form-control-lg"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="fields">
+                                <div class="form-group">
+                                    <label asp-for="Preco" class="control-label">Preço</label>
+                                    <input asp-for="Preco" class="form-control form-control-lg" data-inputmask="'alias': 'currency', 'prefix': 'R$ '" />
+                                    <span asp-validation-for="Preco" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <input asp-for="UserId" type="hidden" id="UserId" name="UserId" value="@user.Id" />
+                        </div>
+
+                        <div class="col-5">
+                            <div class="fields">
+                                <label></label>
+                                <div class="container-img">
+                                    <img src="~/images/default-image.png" name="file" id="file" />
+                                </div>
+                            </div>
+                            <div class="fields">
+                                <label asp-for="Foto" class="control-label">Imagem da capa</label>
+                                <div class="custom-file">
+                                    <input asp-for="Foto" type="file" class="custom-file-input" name="file" id="file" onchange="LoadImage(this)" />
+                                    <label asp-for="Foto" for="file" class="custom-file-label">Selecione uma imagem</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group buttons">
+                        <input type="submit" value="Criar" class="btn btn-outline-success btn-lg" /> &nbsp;
+                        <a asp-action="Index" class="btn btn-link btn-lg">Voltar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type='text/javascript' src='https://code.jquery.com/jquery-1.11.0.js'></script>
+    <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+    <script>
+        function LoadImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $("#file").attr('src', e.target.result);
+                }
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+
+        $(document).ready(function () {
+            $(":input").inputmask();
+
+            $("#phone").inputmask({
+                mask: '999 999 9999',
+                placeholder: ' ',
+                showMaskOnHover: false,
+                showMaskOnFocus: false,
+                onBeforePaste: function (pastedValue, opts) {
+                    var processedValue = pastedValue;
+
+                    //do something with it
+
+                    return processedValue;
+                }
+            });
+        });
+
+        function myFunction() {
+            document.getElementById("myP").style.textAlign = "left";
+        }
+    </script>
+}

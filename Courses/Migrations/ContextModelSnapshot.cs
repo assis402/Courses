@@ -59,6 +59,8 @@ namespace Courses.Migrations
 
                     b.Property<DateTime>("DataCriacao");
 
+                    b.Property<string>("Description");
+
                     b.Property<string>("Foto")
                         .IsRequired();
 
@@ -68,9 +70,83 @@ namespace Courses.Migrations
 
                     b.Property<double>("Preco");
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("CourseId");
 
                     b.ToTable("Cursos");
+                });
+
+            modelBuilder.Entity("Courses.Models.Feature", b =>
+                {
+                    b.Property<string>("FeatureId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Complexibility");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("UpgradeId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("FeatureId");
+
+                    b.HasIndex("UpgradeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Features");
+                });
+
+            modelBuilder.Entity("Courses.Models.Matriculation", b =>
+                {
+                    b.Property<string>("MatriculationId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CourseId");
+
+                    b.Property<string>("ExternalIdentifier");
+
+                    b.Property<DateTime>("PurchaseDate");
+
+                    b.Property<double>("TotalValue");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("MatriculationId");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Matriculation");
+                });
+
+            modelBuilder.Entity("Courses.Models.Upgrade", b =>
+                {
+                    b.Property<string>("UpgradeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("UpgradeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Upgrades");
                 });
 
             modelBuilder.Entity("Courses.Models.User", b =>
@@ -90,6 +166,8 @@ namespace Courses.Migrations
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
+
+                    b.Property<string>("Foto");
 
                     b.Property<string>("Matricula");
 
@@ -128,28 +206,6 @@ namespace Courses.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Alunos");
-                });
-
-            modelBuilder.Entity("Courses.Models.UserCourse", b =>
-                {
-                    b.Property<string>("UserCourseId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CourseId");
-
-                    b.Property<int>("Progress");
-
-                    b.Property<DateTime>("PurchaseDate");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("UserCourseId");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Curso Comprado");
                 });
 
             modelBuilder.Entity("Courses.Models.Wallet", b =>
@@ -256,7 +312,18 @@ namespace Courses.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Courses.Models.UserCourse", b =>
+            modelBuilder.Entity("Courses.Models.Feature", b =>
+                {
+                    b.HasOne("Courses.Models.Upgrade", "Upgrade")
+                        .WithMany("Features")
+                        .HasForeignKey("UpgradeId");
+
+                    b.HasOne("Courses.Models.User", "User")
+                        .WithMany("Features")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Courses.Models.Matriculation", b =>
                 {
                     b.HasOne("Courses.Models.Course", "Course")
                         .WithMany("Alunos")
@@ -265,6 +332,13 @@ namespace Courses.Migrations
 
                     b.HasOne("Courses.Models.User", "User")
                         .WithMany("UserCourses")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Courses.Models.Upgrade", b =>
+                {
+                    b.HasOne("Courses.Models.User", "User")
+                        .WithMany("Upgrades")
                         .HasForeignKey("UserId");
                 });
 

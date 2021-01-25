@@ -45,7 +45,7 @@ body {
     }
 }
 
-.mainContent{
+.mainContent {
     padding-top: 50px;
     padding-bottom: 50px;
 }
@@ -53,17 +53,16 @@ body {
 .title {
     padding-top: 25px;
     padding-bottom: 10px;
-
 }
 
-.buttons{
-    padding-top:30px;
-    padding-bottom:30px;
+.buttons {
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
-.fields{
-    padding-top:15px;
-    padding-bottom:15px;
+.fields {
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .adress, .courses, .data {
@@ -71,7 +70,14 @@ body {
     padding-bottom: 50px;
 }
 
-.card-img-top{
+.card-img-top {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card-img-top-course {
+    height: 300px;
+    width: 300px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -85,4 +91,135 @@ body {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.card-body-course {
+    background-color: #fbfbfb;
+}
+
+.box-img {
+    position: relative;
+    width: 50%;
+}
+
+.box:before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+
+.container-img {
+    position: relative;
+    width: 100%;
+}
+
+    .container-img:after {
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+    }
+
+    .container-img img {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+.course-card {
+    padding-bottom: 30px;
+}
+
+.description {
+    padding-top: 15px;
+    white-space: pre-wrap;
+}
+
+.img300 {
+    height: 300px;
+    width: 300px;
+}
+
+.bottomContent {
+    position: absolute;
+    bottom: 0;
+}
+
+.card-body-no-padding {
+    padding: 0;
+}
+
+.float-buttom {
+    width: 45px;
+    z-index: 1;
+    position: absolute;
+    right: 0;
+    margin-right: 15px;
+    margin-top: 15px;
+}
+
+.editClass {
+    float: right;
+
+}
+
+.titleCourse {
+    color: #525252
+}
+
+    .titleCourse:hover {
+        color: black;
+        text-decoration: none
+    }
+
+.courseItens {
+    font-size: 17px;
+}
+
+.dateUpdates {
+    width: 48px;
+    height: 32px;
+    background-color: #fad3ff;
+    text-align: center;
+    line-height: 30px;
+    font-size: 13px;
+    color: #6d6d6d;
+}
+
+.float-hide {
+    margin-left: -30px;
+    cursor: pointer;
+}
+
+.walletBuy {
+    max-width: 80%;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    padding-left: 15px;
+    padding-right: 5px;
+}
+
+
+#demo {
+    -webkit-transition: width 2s ease;
+    -moz-transition: width 2s ease;
+    -o-transition: width 2s ease;
+    transition: width 2s ease;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    background: yellow;
+    vertical-align: middle;
+    line-height: 30px;
+    height: 30px;
+    width: 0px;
+}
+
+#demo.in {
+    width: 220px;
 }

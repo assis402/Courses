@@ -1,9 +1,5 @@
 ﻿using Courses.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Courses.ViewModels
 {
@@ -13,6 +9,10 @@ namespace Courses.ViewModels
         [Required(ErrorMessage = "Campo Obrigatório")]
         [StringLength(100, ErrorMessage = "Use menos de 100 caracteres")]
         public string Nome { get; set; }
+
+        [Required(ErrorMessage = "Campo Obrigatório")]
+        [StringLength(10, ErrorMessage = "Use menos de 10 caracteres")]
+        public string Nickname { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         [CustomValidationCPF(ErrorMessage = "CPF inválido")]

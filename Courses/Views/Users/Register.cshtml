@@ -24,6 +24,14 @@
 
                     <div class="fields">
                         <div class="form-group">
+                            <label asp-for="Nickname" class="control-label">Nickname</label>
+                            <input asp-for="Nickname" class="form-control form-control-lg" />
+                            <span asp-validation-for="Nickname" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="fields">
+                        <div class="form-group">
                             <label asp-for="CPF" class="control-label"></label>
                             <input asp-for="CPF" class="form-control form-control-lg cpf" />
                             <span asp-validation-for="CPF" class="text-danger"></span>

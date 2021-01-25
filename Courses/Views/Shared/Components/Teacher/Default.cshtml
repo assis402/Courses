@@ -1,0 +1,69 @@
+﻿@model Courses.Models.User
+@{
+    ViewData["Title"] = "Default";
+}
+
+<div class="col-md-4">
+    <div class="card rounded">
+        <div class="card-header" style="height: 6em">
+            <h3 style="padding-top: 16px">
+                <i class="fas fa-address-card fa-lg"></i> &nbsp; <b>Instrutor do curso</b>
+            </h3>
+        </div>
+        <img class="card-img-top" src="~/images/default.png" alt="Card image cap">
+        <div class="card-body">
+            <h4 class="card-title"><b>@Model.Nome</b></h4>
+            <p class="card-text">Professor</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li style="list-style-type: none">
+                <div class="input-group border-light">
+                    <div class="input-group-prepend border-light">
+                        <span class="input-group-text border-light" id="inputGroup-sizing-default" style="background-color: white; width: 100px">Matrícula</span>
+                    </div>
+                    <input asp-for="@Model.Matricula" style="background-color: white" readonly type="text" class="border-light form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+            </li>
+
+            <li style="list-style-type: none">
+                <div class="input-group border-light">
+                    <div class="input-group-prepend border-light">
+                        <span class="input-group-text border-light" id="inputGroup-sizing-default" style="background-color: white; width: 100px">CPF</span>
+                    </div>
+                    <input asp-for="@Model.Matricula" style="background-color: white" readonly type="text" class="border-light form-control cpf" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+            </li>
+
+            <li style="list-style-type: none">
+                <div class="input-group border-light">
+                    <div class="input-group-prepend border-light">
+                        <span class="input-group-text border-light" id="inputGroup-sizing-default" style="background-color: white; width: 100px">E-mail</span>
+                    </div>
+                    <input asp-for="@Model.Matricula" style="background-color: white" readonly type="text" class="border-light form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+            </li>
+
+            <li style="list-style-type: none">
+                <div class="input-group border-light">
+                    <div class="input-group-prepend border-light">
+                        <span class="input-group-text border-light" id="inputGroup-sizing-default" style="background-color: white; width: 100px">Telefone</span>
+                    </div>
+                    <input asp-for="@Model.Matricula" style="background-color: white" readonly type="text" class="border-light form-control telefone" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+            </li>
+
+            <li style="list-style-type: none">
+                <div class="input-group border-light">
+                    <div class="input-group-prepend border-light">
+                        <span class="input-group-text border-light" id="inputGroup-sizing-default" style="background-color: white; width: 100px">Data criação</span>
+                    </div>
+                    <span class="input-group-text border-light" id="inputGroup-sizing-default" style="background-color: white">@Model.DataCriacao.ToString("dd/MM/yyy")</span>
+                </div>
+            </li>
+        </ul>
+        <div class="card-footer">
+            <small class="text-muted">Última atualização em @Model.DataAtualizacao.ToString("dd/MM/yyy")</small>
+        </div>
+    </div>
+</div>
+

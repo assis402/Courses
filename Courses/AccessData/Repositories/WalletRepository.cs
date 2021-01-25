@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,19 +17,24 @@ namespace Courses.AccessData.Repositories
             _context = context;
         }
 
-        public double PickBalanceById(string Id)
+        public double GetBalanceById(string Id)
         {
-            return _context.Wallets.FirstOrDefault(c => c.UserId == Id).Balance;
+            return _context.Wallets.FirstOrDefault(c => c.WalletId == Id).Balance;
         }
 
-        public new async Task<IEnumerable<Wallet>> PickAll()
+        public new async Task<IEnumerable<Wallet>> GetAll()
         {
             return await _context.Wallets.Include(c => c.User).ToListAsync();
         }
 
-        public async Task<Wallet> PickBalanceByUserId(string id)
+        public async Task<Wallet> GetWalletByUserId(string userId)
         {
-            return await _context.Wallets.FirstOrDefaultAsync(c => c.UserId == id);
+            return await _context.Wallets.FirstOrDefaultAsync(c => c.UserId == userId);
+        }
+
+        public double GetBalanceByUserId(string id)
+        {
+            return _context.Wallets.FirstOrDefault(c => c.UserId == id).Balance;
         }
 
     }
