@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Courses.Models.Course>
+
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-4">
+            <div class="cards">
+                <div class="card">
+                    <img src="@Url.Content(item.Foto)" class="card-img-top img-fluid" />
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Nome</h5>
+                        <h5>Teste</h5>
+                        <h5><span class="badge badge-success">R$ Teste</span></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

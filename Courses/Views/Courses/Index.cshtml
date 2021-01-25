@@ -7,47 +7,50 @@
 
 }
 
-<h3 class="title">
-    <i class="fas fa-graduation-cap fa-lg"></i> Cursos &nbsp;
-    <a asp-action="Create" asp-controller="Courses" class="editClass btn btn-outline-primary px-2" data-toggle="right" title="Novo curso">
-        Novo curso &ensp;
-        <i class="fas fa-plus-circle fa-lg" aria-hidden="true"></i>
-    </a>
-</h3>
+<div class="my-3 p-3 bg-white rounded shadow">
+    <h3 class="title">
+        <i class="fas fa-graduation-cap fa-lg"></i> Cursos &nbsp;
+        <a asp-action="Create" asp-controller="Courses" class="editClass btn btn-outline-primary px-2" data-toggle="right" title="Novo curso">
+            Novo curso &ensp;
+            <i class="fas fa-plus-circle fa-lg" aria-hidden="true"></i>
+        </a>
+    </h3>
 
-<div class="row">
 
-    @foreach (var item in Model)
-    {
-        <div class="col-4 course-card">
-            <div class="cards">
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-4 course-card">
                 <div class="cards">
-                    <a asp-action="Details" asp-controller="Courses" asp-route-id="@item.CourseId">
-                        <div class="container-img">
-                            <img src="@Url.Content(item.Foto)" />
-                        </div>
-                    </a>
-                    <div class="card-body card-body-course">
-                        <a class="titleCourse" asp-action="Details" asp-controller="Courses" asp-route-id="@item.CourseId">
-                            <h5 class="card-title"><b>@item.Nome</b></h5>
+                    <div class="cards">
+                        <a asp-action="Details" asp-controller="Courses" asp-route-id="@item.CourseId">
+                            <div class="container-img">
+                                <img src="@Url.Content(item.Foto)" />
+                            </div>
                         </a>
-                        <h4><span class="badge badge-secondary">R$ @item.Preco.ToString("F2")</span></h4>
-                    </div>
-                    <div class="card-footer">
-                        @if (User.IsInRole("Administrador"))
-                        {
-                            <a asp-action="Edit" asp-controller="Courses" asp-route-id="@item.CourseId" class="btn btn-outline-info">Atualizar</a>
-                            <a onclick="ConfirmDeletion(@item.CourseId, '@item.Nome', '@controller')" class="btn btn-outline-danger">Excluir</a>
-                        }
-                        else
-                        {
-                            <a asp-action="Matricular" asp-controller="Courses" asp-route-CourseId="@item.CourseId" asp-route-Preco="@item.Preco" class="btn btn-outline-info btn-block">Matricular-se</a>
-                        }
+                        <div class="card-body card-body-course">
+                            <a class="titleCourse" asp-action="Details" asp-controller="Courses" asp-route-id="@item.CourseId">
+                                <h5 class="card-title"><b>@item.Nome</b></h5>
+                            </a>
+                            <h4><span class="badge badge-secondary">R$ @item.Preco.ToString("F2")</span></h4>
+                        </div>
+                        <div class="card-footer">
+                            @if (User.IsInRole("Administrador"))
+                            {
+                                <a asp-action="Edit" asp-controller="Courses" asp-route-id="@item.CourseId" class="btn btn-outline-info">Atualizar</a>
+                                <a onclick="ConfirmDeletion(@item.CourseId, '@item.Nome', '@controller')" class="btn btn-outline-danger">Excluir</a>
+                            }
+                            else
+                            {
+                                <a asp-action="Matriculate" asp-controller="Matriculation" asp-route-CourseId="@item.CourseId" class="btn btn-outline-info btn-block">Matricular-se</a>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
 
 <partial name="_ModalDeletion" />
