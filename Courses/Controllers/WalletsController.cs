@@ -63,19 +63,19 @@ namespace Courses.Controllers
                 return NotFound();
             }
             _logger.LogError("Informações inválidas");
-            //ViewData["UserId"] = new SelectList(_userRepository.PickAll(), "Id", "Email", wallet.UserId);
+            ViewData["UserId"] = new SelectList(_userRepository.GetAll(), "Id", "UserName", wallet.UserId).ToList();
             return View(wallet);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("WalletId,UserId,Saldo")] Wallet wallet)
+        public async Task<IActionResult> Edit([Bind("WalletId,UserId,Balance")] Wallet wallet)
         {
-            if (id != wallet.WalletId)
+            /*if (id != wallet.WalletId)
             {
                 _logger.LogError("Conta não encontrada");
                 return NotFound();
-            }
+            }*/
 
             if (ModelState.IsValid)
             {
@@ -84,7 +84,7 @@ namespace Courses.Controllers
                 return RedirectToAction(nameof(Index));
             }
             _logger.LogError("Informações Inválidas");
-            ViewData["UserId"] = new SelectList(await _walletRepository.GetAll(), "Id", "Email", wallet.UserId);
+            ViewData["UserId"] = new SelectList(await _walletRepository.GetAll(), "Id", "UserName", wallet.UserId);
             return View(wallet);
         }
     }

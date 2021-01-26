@@ -85,7 +85,7 @@ namespace Courses.Controllers
                     await _userRepository.AssignAccessLevel(user, accessLevel);
                     _logger.LogInformation("Atribuição concluída");
 
-                    var wallet = new Wallet() { Balance = 0, User = user, UserId = user.Id };
+                    var wallet = new Wallet() { Balance = 400, User = user, UserId = user.Id };
                     user.Wallet = wallet;
 
                     await _walletRepository.Insert(wallet);
