@@ -8,13 +8,18 @@
     <div class="container">
         <h3 class="title"><i class="fas fa-user"></i> &nbsp; <b>Promover</b></h3>
         <hr />
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <p class="alert alert-warning">@TempData["ErrorMessage"].ToString()</p>
+        }
         <div class="row">
             <div class="col-md-8">
-                <form asp-action="Update">
+                <form asp-action="Promote">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <h4>O seu nível atual é <b>@Model.AccessLevel</b></h4>
                     <p></p>
                     <input asp-for="Id" type="hidden" />
+                    <input asp-for="AccessLevel" type="hidden" />
                     <div class="fields">
                         <div class="form-group">
                             <label asp-for="NewAccessLevel" class="control-label">Selecione para qual nível deseja promover</label>
@@ -26,13 +31,14 @@
                         </div>
                     </div>
 
-                    <div class="fields">
+                    @*<div class="fields">
                         <div class="form-group">
                             <label asp-for="AuthorizationKey" class="control-label">Digite a chave de autorização</label>
                             <input asp-for="AuthorizationKey" class="form-control form-control-lg" />
                             <span asp-validation-for="AuthorizationKey" class="text-danger"></span>
                         </div>
                     </div>
+                    *@
 
                     <div class="form-group buttons">
                         <input type="submit" value="Promover" class="btn btn-outline-info btn-lg" /> &nbsp;

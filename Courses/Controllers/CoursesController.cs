@@ -123,8 +123,9 @@ namespace Courses.Controllers
             var editCourseViewModel = new EditCourseViewModel
             {
                 CourseId = course.CourseId,
+                Description = course.Description,
                 Title = course.Title,
-                Image = course.Image,
+                //Image = course.Image,
                 Price = course.Price.ToString(),
                 CourseLoad = course.CourseLoad
             };
@@ -136,17 +137,11 @@ namespace Courses.Controllers
         // POST: Course/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("CourseId,Name,Image,CourseLoad,Price")] Course course, IFormFile file)
+        public async Task<IActionResult> Edit([Bind("CourseId,Title,Description,Image,CourseLoad,Price")] EditCourseViewModel editCourseViewModel)
         {
-            if (id != course.CourseId)
-            {
-                _logger.LogError("Curso não encontrado");
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                if (file != null)
+                /*if (file != null)
                 {
                     _logger.LogInformation("Criando link da pasta");
                     var linkUpload = Path.Combine(_hostingEnviroment.WebRootPath, "imagesCourses");
@@ -161,18 +156,31 @@ namespace Courses.Controllers
                     }
                 }
 
-                else course.Image = TempData["imagesCourses"].ToString();
+                else course.Image = TempData["imagesCourses"].ToString();*/
+
+                Course course = await _courseRepository.GetById(editCourseViewModel.CourseId);
+
+                editCourseViewModel.Price = RemoveNonNumeric(editCourseViewModel.Price);
+
+                course.Title = editCourseViewModel.Title;
+                //course.Image = editCourseViewModel.Image;
+                course.Description = editCourseViewModel.Description;
+                course.CourseLoad = editCourseViewModel.CourseLoad;
+                course.UpdateDate = DateTime.Now;
+                course.Price = double.Parse(editCourseViewModel.Price) / 100;
+                //course.UserId = editCourseViewModel.UserId;
+  
 
                 _logger.LogInformation("Atualizando curso");
                 await _courseRepository.Update(course);
                 return RedirectToAction(nameof(Index));
             }
-            return View(course);
+            return View(editCourseViewModel);
         }
 
         // POST: Course/Delete/5
         [HttpPost]
-        public async Task<JsonResult> DeleteConfirmed(string id)
+        public async Task<JsonResult> Delete(string id)
         {
             var course = await _courseRepository.GetById(id);
 

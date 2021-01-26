@@ -6,14 +6,18 @@ namespace Courses.ViewModels
     public class EditCourseViewModel
 
     {
+        public string UserId { get; set; }
         public string CourseId { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         [StringLength(100, ErrorMessage = "Use menos de 100 caracteres")]
         public string Title { get; set; }
 
+        //[Required(ErrorMessage = "Campo Obrigatório")]
+        //public string Image { get; set; }
+
         [Required(ErrorMessage = "Campo Obrigatório")]
-        public string Image { get; set; }
+        public string Description { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         public int CourseLoad { get; set; }

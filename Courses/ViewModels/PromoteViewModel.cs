@@ -14,7 +14,7 @@ namespace Courses.ViewModels
         [Required(ErrorMessage = "Campo Obrigatório")]
         public string NewAccessLevel { get; set; }
 
-        [Required(ErrorMessage = "Campo Obrigatório")]
+        //[Required(ErrorMessage = "Campo Obrigatório")]
         public string AuthorizationKey { get; set; }
 
     }

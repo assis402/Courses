@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using System.Linq;
 
 namespace Courses.Controllers
 {
@@ -19,14 +20,16 @@ namespace Courses.Controllers
         private readonly IUserRepository _userRepository;
         readonly IHostingEnvironment _hostingEnviroment;
         private readonly IWalletRepository _walletRepository;
+        private readonly SignInManager<User> _signInManager;
         private readonly ILogger<UsersController> _logger;
 
-        public UsersController(UserManager<User> userManager, IUserRepository userRepository, IHostingEnvironment hostingEnviroment, IWalletRepository walletRepository, ILogger<UsersController> logger)
+        public UsersController(UserManager<User> userManager, IUserRepository userRepository, IHostingEnvironment hostingEnviroment, IWalletRepository walletRepository, SignInManager<User> signInManager, ILogger<UsersController> logger)
         {
             _userManager = userManager;
             _userRepository = userRepository;
             _hostingEnviroment = hostingEnviroment;
             _walletRepository = walletRepository;
+            _signInManager = signInManager;
             _logger = logger;
         }
 
@@ -173,11 +176,11 @@ namespace Courses.Controllers
         {
             _logger.LogInformation("Verificando se o usuário existe");
             var user = await _userRepository.GetById(UserId);
-            var accessLevel = await _userManager.GetRolesAsync(user);
+            var accessLevels = await _userManager.GetRolesAsync(user);
             var promoteViewModel = new PromoteViewModel
             {
                 Id = user.Id,
-                AccessLevel = accessLevel[0],
+                AccessLevel = accessLevels[0],
                 UpdateDate = DateTime.Now
             };
 
@@ -191,11 +194,21 @@ namespace Courses.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(promoteViewModel.AccessLevel == promoteViewModel.NewAccessLevel)
+                {
+                    _logger.LogInformation("Usuário já está com este nível de acesso");
+                    TempData["ErrorMessage"] = "Você já está com este nível";
+                    return View(promoteViewModel);
+                }
+
                 _logger.LogInformation("Pegando usuário pela matrícula");
 
                 var user = await _userRepository.GetById(promoteViewModel.Id);
+                var accessLevels = await _userManager.GetRolesAsync(user);
+                await _userManager.RemoveFromRolesAsync(user, accessLevels.ToArray());
+                await _userRepository.AssignAccessLevel(user, promoteViewModel.NewAccessLevel);
+                await _signInManager.SignInAsync(user, false, null);
 
-                await _userRepository.AssignAccessLevel(user, promoteViewModel.AccessLevel);
                 _logger.LogInformation("Atribuição concluída");
 
                 return RedirectToAction("Index", "Users");

@@ -6,13 +6,17 @@
 @inject UserManager<User> UserManager
 
 @{
+    User user = await UserManager.GetUserAsync(User);
+}
+
+@{
     ViewData["Title"] = "Cursos";
 }
 
 <div class="my-3 courseCards bg-white rounded shadow">
     <h3 style="margin-bottom: 25px">
         <i class="fas fa-graduation-cap fa-lg"></i> Cursos &nbsp;
-        @if (SignInManager.IsSignedIn(User))
+        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Professor"))
         {
             <a asp-action="Create" asp-controller="Courses" class="editClass btn btn-outline-primary px-2">
                 Novo curso &ensp;
@@ -21,7 +25,7 @@
         }
         else
         {
-            <button class="editClass btn btn-outline-primary px-2" data-toggle="top" title="Você precisa estar logado" disabled>
+            <button class="editClass btn btn-outline-primary px-2" data-toggle="top" title="Você precisa estar logado e possuir o nível de Professor" disabled>
                 Novo curso &ensp;
                 <i class="fas fa-plus-circle fa-lg" aria-hidden="true"></i>
             </button>
@@ -48,10 +52,21 @@
                             <h4><span class="badge badge-secondary">R$ @item.Price.ToString("F2")</span></h4>
                         </div>
                         <div class="card-footer">
-                            @if (SignInManager.IsSignedIn(User))
+
+                            @if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrador") || SignInManager.IsSignedIn(User) && item.UserId == user.Id)
                             {
-                                /*<a asp-action="Edit" asp-controller="Courses" asp-route-id="@item.CourseId" class="btn btn-outline-info">Atualizar</a>
-                                <a onclick="ConfirmDeletion(@item.CourseId, '@item.Title', '@controller')" class="btn btn-outline-danger">Excluir</a>*/
+                                <div class="buttons-actions">
+                                    <a asp-action="Edit" asp-controller="Courses" asp-route-CourseId="@item.CourseId" class="btn btn-outline-primary">Atualizar</a>
+                                    <a onclick="ConfirmDeletion('@item.CourseId', '@item.Title')" class="btn btn-outline-danger">Excluir</a>
+                                </div>
+                                <a asp-action="Matriculate" asp-controller="Matriculation" asp-route-CourseId="@item.CourseId" class="btn btn-outline-info btn-block">Matricular-se</a>
+                            }
+                            else if (SignInManager.IsSignedIn(User) && User.IsInRole("Aluno") || SignInManager.IsSignedIn(User) && User.IsInRole("Professor"))
+                            {
+                                <div class="buttons-actions">
+                                    <button class="btn btn-outline-dark" disabled data-toggle="top" title="Você precisa possuir o nível de Administrador ou ser o criador do curso">Atualizar</button>
+                                    <button class="btn btn-outline-dark" disabled data-toggle="top" title="Você precisa possuir o nível de Administrador ou ser o criador do curso">Excluir</button>
+                                </div>
                                 <a asp-action="Matriculate" asp-controller="Matriculation" asp-route-CourseId="@item.CourseId" class="btn btn-outline-info btn-block">Matricular-se</a>
                             }
                             else
@@ -75,13 +90,13 @@
         })
 
 
-        function ConfirmDeletion(id, Name, controller) {
-            $(".Name").html(Name);
+        function ConfirmDeletion(id, titleCourse) {
+            $(".Name").html(titleCourse);
 
             $(".modal").modal("show");
 
             $(".btnDelete").on('click', function () {
-                var url = "/" + controller + "/Delete/";
+                var url = "/Courses/Delete/";
 
                 $.ajax({
                     method: "POST",

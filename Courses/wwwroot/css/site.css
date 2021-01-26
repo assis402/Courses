@@ -165,7 +165,6 @@ body {
 
 .editClass {
     float: right;
-
 }
 
 .titleCourse {
@@ -220,12 +219,29 @@ body {
     width: 0px;
 }
 
-#demo.in {
-    width: 220px;
-}
+    #demo.in {
+        width: 220px;
+    }
 
 .courseCards {
     padding-left: 25px;
     padding-right: 25px;
     padding-top: 25px;
+}
+
+.buttons-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1%;
+}
+
+.buttons-actions button {
+    width: 49.5%;
+    padding: 1%;
+}
+
+.buttons-actions a {
+    width: 49.5%;
+    padding: 1%;
 }
