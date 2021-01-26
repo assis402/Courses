@@ -22,7 +22,7 @@
             - Login <br />
             - Gerenciamento de conta (criação e edição)<br />
             - Validação de CPF<br />
-            - Adição de foto de perfil<br />
+            - Adição de Image de perfil<br />
             <br>
             - Gerenciamento de nível de acesso (criação, edição e remoção)<br />
             - Promoção de nível<br />
@@ -59,7 +59,7 @@
             @foreach (Upgrade upgrade in Model.Upgrades)
             {
                 <div class="media text-muted pt-3">
-                    <div class="dateUpdates mr-2 rounded">@upgrade.Date.ToString("dd/MM")</div>
+                    <div class="dateUpdates mr-2 rounded">@upgrade.CreationDate.ToString("dd/MM")</div>
                     <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                         @upgrade.Title
                         <strong class="d-block text-gray-dark">@await Component.InvokeAsync("UserName", upgrade.UserId)</strong>
@@ -95,7 +95,7 @@
             @foreach (Feature feature in Model.Features)
             {
                 <div class="media text-muted pt-3">
-                    <div class="dateUpdates mr-2 rounded">@feature.Date.ToString("dd/MM")</div>
+                    <div class="dateUpdates mr-2 rounded">@feature.CreationDate.ToString("dd/MM")</div>
                     <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                         @feature.Title
                         <strong class="d-block text-gray-dark">@await Component.InvokeAsync("UserName", feature.UserId)</strong>

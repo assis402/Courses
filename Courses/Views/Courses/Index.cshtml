@@ -7,8 +7,8 @@
 
 }
 
-<div class="my-3 p-3 bg-white rounded shadow">
-    <h3 class="title">
+<div class="my-3 courseCards bg-white rounded shadow">
+    <h3 style="margin-bottom: 25px">
         <i class="fas fa-graduation-cap fa-lg"></i> Cursos &nbsp;
         <a asp-action="Create" asp-controller="Courses" class="editClass btn btn-outline-primary px-2" data-toggle="right" title="Novo curso">
             Novo curso &ensp;
@@ -26,20 +26,20 @@
                     <div class="cards">
                         <a asp-action="Details" asp-controller="Courses" asp-route-id="@item.CourseId">
                             <div class="container-img">
-                                <img src="@Url.Content(item.Foto)" />
+                                <img src="@Url.Content(item.Image)" />
                             </div>
                         </a>
                         <div class="card-body card-body-course">
                             <a class="titleCourse" asp-action="Details" asp-controller="Courses" asp-route-id="@item.CourseId">
-                                <h5 class="card-title"><b>@item.Nome</b></h5>
+                                <h5 class="card-title"><b>@item.Title</b></h5>
                             </a>
-                            <h4><span class="badge badge-secondary">R$ @item.Preco.ToString("F2")</span></h4>
+                            <h4><span class="badge badge-secondary">R$ @item.Price.ToString("F2")</span></h4>
                         </div>
                         <div class="card-footer">
                             @if (User.IsInRole("Administrador"))
                             {
                                 <a asp-action="Edit" asp-controller="Courses" asp-route-id="@item.CourseId" class="btn btn-outline-info">Atualizar</a>
-                                <a onclick="ConfirmDeletion(@item.CourseId, '@item.Nome', '@controller')" class="btn btn-outline-danger">Excluir</a>
+                                <a onclick="ConfirmDeletion(@item.CourseId, '@item.Title', '@controller')" class="btn btn-outline-danger">Excluir</a>
                             }
                             else
                             {
@@ -62,8 +62,8 @@
         })
 
 
-        function ConfirmDeletion(id, nome, controller) {
-            $(".Nome").html(nome);
+        function ConfirmDeletion(id, Name, controller) {
+            $(".Name").html(Name);
 
             $(".modal").modal("show");
 

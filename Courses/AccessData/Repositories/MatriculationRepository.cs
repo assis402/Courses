@@ -17,7 +17,7 @@ namespace Courses.AccessData.Repositories
 
         public async Task<bool> AlreadyMatriculate(string userId, string courseId)
         {
-            return await _context.Matriculation.AnyAsync(a => a.UserId == userId && a.CourseId == courseId);
+            return await _context.Matriculations.AnyAsync(a => a.UserId == userId && a.CourseId == courseId);
         }
     }
 }

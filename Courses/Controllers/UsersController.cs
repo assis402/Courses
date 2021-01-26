@@ -58,19 +58,19 @@ namespace Courses.Controllers
                 DateTime date = DateTime.Now;
                 string generatedMatricula = GenerateMatricula(date.Year, register.CPF);
                 string cpf = RemoveNonNumeric(register.CPF);
-                string telefone = RemoveNonNumeric(register.Telefone);
+                string phoneNumber = RemoveNonNumeric(register.PhoneNumber);
 
                 User user = new User()
                 {
                     Matricula = generatedMatricula,
-                    Nome = register.Nome,
+                    Name = register.Name,
                     UserName = register.Nickname,
                     PasswordHash = cpf,
                     CPF = cpf,
-                    Telefone = telefone,
+                    PhoneNumber = phoneNumber,
                     Email = register.Email,
-                    DataCriacao = date,
-                    DataAtualizacao = date
+                    CreationDate = date,
+                    UpdateDate = date
                 };
 
                 _logger.LogInformation("Tentando criar usurário");
@@ -85,11 +85,11 @@ namespace Courses.Controllers
                     await _userRepository.AssignAccessLevel(user, accessLevel);
                     _logger.LogInformation("Atribuição concluída");
 
-                    var wallet = new Wallet() { Balance = 0, User = user, UserId = user.Id };
+                    var wallet = new Wallet() { Balance = 0, User = user, UserId = user.UserId };
                     user.Wallet = wallet;
 
                     await _walletRepository.Insert(wallet);
-                    var test = wallet.User.Nome;
+
                     _logger.LogInformation("Carteira atribuída");
 
                     _logger.LogInformation("Logando usuário");
@@ -123,13 +123,13 @@ namespace Courses.Controllers
 
             var updateViewModel = new UpdateViewModel
             {
-                Id = user.Id,
-                DataCriacao = user.DataCriacao,
-                DataAtualizacao = DateTime.Now,
-                Nome = user.Nome,
+                UserId = user.UserId,
+                CreationDate = user.CreationDate,
+                UpdateDate = DateTime.Now,
+                Name = user.Name,
                 CPF = user.CPF,
                 Email = user.Email,
-                Telefone = user.Telefone
+                PhoneNumber = user.PhoneNumber
             };
 
             _logger.LogInformation("Atualizar usuário");
@@ -143,16 +143,16 @@ namespace Courses.Controllers
             if (ModelState.IsValid)
             {
                 _logger.LogInformation("Pegando usuário pela matrícula");
-                var user = await _userRepository.GetById(updateViewModel.Id);
+                var user = await _userRepository.GetById(updateViewModel.UserId);
                 PasswordHasher<User> passwordHasher = new PasswordHasher<User>();
                 if (passwordHasher.VerifyHashedPassword(user, user.PasswordHash, updateViewModel.Password) != PasswordVerificationResult.Failed)
                 {
                     _logger.LogInformation("Informações corretas. Atualizando usuário");
 
-                    user.Nome = updateViewModel.Nome;
+                    user.Name = updateViewModel.Name;
                     user.Email = updateViewModel.Email;
-                    user.Telefone = updateViewModel.Telefone;
-                    user.DataAtualizacao = updateViewModel.DataAtualizacao;
+                    user.PhoneNumber = updateViewModel.PhoneNumber;
+                    user.UpdateDate = updateViewModel.UpdateDate;
 
                     await _userRepository.UpdateUser(user);
 
@@ -176,9 +176,9 @@ namespace Courses.Controllers
             var accessLevel = await _userManager.GetRolesAsync(user);
             var promoteViewModel = new PromoteViewModel
             {
-                Id = user.Id,
+                UserId = user.UserId,
                 AccessLevel = accessLevel[0],
-                DataAtualizacao = DateTime.Now
+                UpdateDate = DateTime.Now
             };
 
             _logger.LogInformation("Promovendo usuário");
@@ -193,7 +193,7 @@ namespace Courses.Controllers
             {
                 _logger.LogInformation("Pegando usuário pela matrícula");
 
-                var user = await _userRepository.GetById(promoteViewModel.Id);
+                var user = await _userRepository.GetById(promoteViewModel.UserId);
 
                 await _userRepository.AssignAccessLevel(user, promoteViewModel.AccessLevel);
                 _logger.LogInformation("Atribuição concluída");
@@ -207,9 +207,9 @@ namespace Courses.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePhoto(string id, [Bind("Id,Foto")] User ChangePhotoUser, IFormFile file)
+        public async Task<IActionResult> ChangePhoto(string id, [Bind("Id,Image")] User ChangePhotoUser, IFormFile file)
         {
-            if (id != ChangePhotoUser.Id)
+            if (id != ChangePhotoUser.UserId)
             {
                 _logger.LogError("Curso não encontrado");
                 return NotFound();
@@ -224,7 +224,7 @@ namespace Courses.Controllers
                     _logger.LogInformation("Criando link da pasta");
                     var linkUpload = Path.Combine(_hostingEnviroment.WebRootPath, "imagesUsers");
                     string nameImg = System.Guid.NewGuid().ToString() + ".jpg";
-                    string backupNameImg = user.Foto;
+                    string backupNameImg = user.Photo;
                     
 
                     using (FileStream fileStream = new FileStream(Path.Combine(linkUpload, nameImg), FileMode.Create))
@@ -232,7 +232,7 @@ namespace Courses.Controllers
                         _logger.LogInformation("Copiando arquivo para a pasta");
                         await file.CopyToAsync(fileStream);
                         _logger.LogInformation("Arquivo copiado");
-                        user.Foto = "~/imagesUsers/" + nameImg;
+                        user.Photo = "~/imagesUsers/" + nameImg;
 
                         _logger.LogInformation("Atualizando usuário");
                         await _userRepository.UpdateUser(user);
@@ -255,9 +255,9 @@ namespace Courses.Controllers
 
             var redefinePasswordViewModel = new RedefinePasswordViewModel
             {
-                Id = user.Id,
-                DataAtualizacao = DateTime.Now,
-                Nome = user.Nome,
+                UserId = user.UserId,
+                UpdateDate = DateTime.Now,
+                Name = user.Name,
             };
 
             _logger.LogInformation("Atualizar usuário");
@@ -272,15 +272,15 @@ namespace Courses.Controllers
             if (ModelState.IsValid)
             {
                 _logger.LogInformation("Pegando usuário pela matrícula");
-                var user = await _userRepository.GetById(redefinePasswordViewModel.Id);
+                var user = await _userRepository.GetById(redefinePasswordViewModel.UserId);
                 PasswordHasher<User> passwordHasher = new PasswordHasher<User>();
-                DateTime date = redefinePasswordViewModel.DataAtualizacao;
+                DateTime date = redefinePasswordViewModel.UpdateDate;
 
                 if (passwordHasher.VerifyHashedPassword(user, user.PasswordHash, redefinePasswordViewModel.Password) != PasswordVerificationResult.Failed)
                 {
                     _logger.LogInformation("Informações corretas. Atualizando usuário");
 
-                    user.DataAtualizacao = date;
+                    user.UpdateDate = date;
                     user.PasswordHash = passwordHasher.HashPassword(user, redefinePasswordViewModel.NewPassword);
 
                     await _userRepository.UpdateUser(user);
@@ -347,7 +347,7 @@ namespace Courses.Controllers
                         _logger.LogInformation("Informações corretas. Logando usurário");
                         await _userRepository.Login(user, false);
 
-                        return RedirectToAction("Index", "Users");
+                        return View("Index", user);
                     }
 
                     _logger.LogInformation("Informações inválidas");

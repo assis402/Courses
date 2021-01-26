@@ -44,8 +44,8 @@ namespace Courses.Controllers
             if (ModelState.IsValid)
             {
                 _logger.LogInformation("Inserindo feature");
-                feature.UserId = user.Id;
-                feature.Date = DateTime.Now;
+                feature.UserId = user.UserId;
+                feature.CreationDate = DateTime.Now;
 
                 await _featureRepository.Insert(feature);
                 return RedirectToAction(nameof(Index));
@@ -74,9 +74,9 @@ namespace Courses.Controllers
 
                 Upgrade upgrade = new Upgrade()
                 {
-                    Date = DateTime.Now,
+                    CreationDate = DateTime.Now,
                     Title = insertUpgradeViewModel.Title,
-                    UserId = user.Id
+                    UserId = user.UserId
                 };
 
                 await _upgradeRepository.Insert(upgrade);

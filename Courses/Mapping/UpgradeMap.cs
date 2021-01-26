@@ -10,11 +10,11 @@ namespace Courses.Mapping
         {
             builder.HasKey(u => u.UpgradeId);
             builder.Property(u => u.Title).IsRequired().HasMaxLength(100);
-            builder.Property(u => u.Date).IsRequired();
+            builder.Property(u => u.CreationDate).IsRequired();
 
             builder.HasMany(u => u.Features).WithOne(u => u.Upgrade);
 
-            builder.HasOne(a => a.User).WithMany(a => a.Upgrades).HasForeignKey(a => a.UserId);
+            builder.HasOne(u => u.User).WithMany(u => u.Upgrades).HasForeignKey(u => u.UserId);
 
             builder.ToTable("Upgrades");
         }

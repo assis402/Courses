@@ -8,7 +8,7 @@ namespace Courses.ViewModels
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         [StringLength(100, ErrorMessage = "Use menos de 100 caracteres")]
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         [StringLength(10, ErrorMessage = "Use menos de 10 caracteres")]
@@ -19,7 +19,7 @@ namespace Courses.ViewModels
         public string CPF { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
-        public string Telefone { get; set; }
+        public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail inválido")]

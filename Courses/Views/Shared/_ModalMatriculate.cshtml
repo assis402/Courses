@@ -16,11 +16,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h5 class="Nome"></h5>
-                <h5 class="fields">O valor para compra deste curso é <b>R$ <span class="Preco"></span></b></h5>
+                <h5 class="Name"></h5>
+                <h5 class="fields">O valor para compra deste curso é <b>R$ <span class="Price"></span></b></h5>
                 <hr>
                 <h5>Saldo em sua carteira:</h5>
-                @await Component.InvokeAsync("Balance", user.Id)
+                @await Component.InvokeAsync("Balance", user.UserId)
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-danger btn-lg" data-dismiss="modal">Cancelar</button>

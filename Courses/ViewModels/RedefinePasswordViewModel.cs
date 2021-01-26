@@ -5,11 +5,11 @@ namespace Courses.ViewModels
 {
     public class RedefinePasswordViewModel
     {
-        public string Id { get; set; }
+        public string UserId { get; set; }
 
-        public DateTime DataAtualizacao { get; set; }
+        public DateTime UpdateDate { get; set; }
 
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         [StringLength(100, ErrorMessage = "Use menos de 100 caracteres")]

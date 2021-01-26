@@ -13,7 +13,7 @@ namespace Courses.Mapping
 
             builder.HasOne(w => w.User).WithOne(w => w.Wallet).HasForeignKey<Wallet>(w => w.UserId);
 
-            builder.ToTable("Carteira");
+            builder.ToTable("Wallets");
         }
     }
 }

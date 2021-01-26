@@ -6,7 +6,7 @@
 <p></p>
 <div class="border border-light rounded shadow col-md-8">
     <div class="container">
-        <h3 class="title"><i class="fas fa-user-lock fa-lg"></i> &nbsp; <b>Atualizar curso: @Model.Nome</b></h3>
+        <h3 class="title"><i class="fas fa-user-lock fa-lg"></i> &nbsp; <b>Atualizar curso: @Model.Title</b></h3>
         <hr />
         <div class="row">
             <div class="col-md-8">
@@ -17,17 +17,17 @@
                         <div class="col-6">
                             <div class="fields">
                                 <div class="form-group">
-                                    <label asp-for="Nome" class="control-label">Nome</label>
-                                    <input asp-for="Nome" class="form-control form-control-lg" />
-                                    <span asp-validation-for="Nome" class="text-danger"></span>
+                                    <label asp-for="Title" class="control-label">Name</label>
+                                    <input asp-for="Title" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Title" class="text-danger"></span>
                                 </div>
                             </div>
 
                             <div class="fields">
                                 <div class="form-group">
-                                    <label asp-for="CargaHoraria" class="control-label">Carga horária</label>
-                                    <input asp-for="CargaHoraria" class="form-control form-control-lg" />
-                                    <span asp-validation-for="CargaHoraria" class="text-danger"></span>
+                                    <label asp-for="CourseLoad" class="control-label">Carga horária</label>
+                                    <input asp-for="CourseLoad" class="form-control form-control-lg" />
+                                    <span asp-validation-for="CourseLoad" class="text-danger"></span>
                                 </div>
                             </div>
 
@@ -41,18 +41,18 @@
 
                             <div class="fields">
                                 <div class="form-group">
-                                    <label asp-for="Preco" class="control-label">Preço</label>
-                                    <input asp-for="Preco" class="form-control form-control-lg" />
-                                    <span asp-validation-for="Preco" class="text-danger"></span>
+                                    <label asp-for="Price" class="control-label">Preço</label>
+                                    <input asp-for="Price" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Price" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-6">
                             <div class="form-group fields">
-                                @if (Model.Foto != null)
+                                @if (Model.Image != null)
                                 {
-                                    <img src="@Url.Content(Model.Foto)" name="file" id="file" height="300" width="300" class="border border-secondary rounded" />
+                                    <img src="@Url.Content(Model.Image)" name="file" id="file" height="300" width="300" class="border border-secondary rounded" />
                                 }
 
                                 else
@@ -62,9 +62,9 @@
                             </div>
                             <div class="fields">
                                 <div class="form-group">
-                                    <label asp-for="Foto" class="control-label"></label>
-                                    <input asp-for="Foto" type="file" class="form-control-file form-control-lg" name="file" id="file" onchange="LoadImage(this)" />
-                                    <span asp-validation-for="Foto" class="text-danger"></span>
+                                    <label asp-for="Image" class="control-label"></label>
+                                    <input asp-for="Image" type="file" class="form-control-file form-control-lg" name="file" id="file" onchange="LoadImage(this)" />
+                                    <span asp-validation-for="Image" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>

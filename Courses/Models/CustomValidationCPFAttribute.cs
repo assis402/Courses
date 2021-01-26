@@ -14,8 +14,8 @@ namespace Courses.Models
         {
             if (value == null || string.IsNullOrEmpty(value.ToString()))
                 return true;
-            bool valido = ValidCPF(value.ToString());
-            return valido;
+            bool valid = ValidCPF(value.ToString());
+            return valid;
         }
         /// Validação client
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)

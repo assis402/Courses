@@ -1,8 +1,7 @@
 ﻿@model Courses.Models.Course
 
 @{
-    ViewData["Title"] = Model.Nome;
-    string controller = "Matriculation";
+    ViewData["Title"] = Model.Title;
 }
 
 <div class="data">
@@ -11,14 +10,14 @@
             <div class="card rounded">
                 <div class="card-header" style="height: 6em">
                     <h3 style="padding-top: 16px">
-                        <i class="fas fa-crow fa-lg"></i> &nbsp; <b>@Model.Nome</b> &nbsp;
+                        <i class="fas fa-crow fa-lg"></i> &nbsp; <b>@Model.Title</b> &nbsp;
                     </h3>
                 </div>
                 <div class="container" style="padding-top: 15px">
                     <div class="row">
                         <div class="col-md-6" style="padding-right: 0">
                             <div class="container-img">
-                                <img src="@Url.Content(Model.Foto)" />
+                                <img src="@Url.Content(Model.Image)" />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -30,7 +29,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text border-0" id="basic-addon1"><i class="fas fa-hourglass-half fa-lg"></i></span>
                                         </div>
-                                        <span type="text" class="courseItens form-control form-control-lg border-0" style="background-color: #fdfdfd; font-size: 16px" aria-label="Username" aria-describedby="basic-addon1">@Model.CargaHoraria horas</span>
+                                        <span type="text" class="courseItens form-control form-control-lg border-0" style="background-color: #fdfdfd; font-size: 16px" aria-label="Username" aria-describedby="basic-addon1">@Model.CourseLoad horas</span>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -68,7 +67,7 @@
                                     {
                                     <p class="alert alert-warning">@TempData["ErrorMessage"].ToString()</p>
                                     }
-                                    <span class="badge badge-secondary btn-block" style="font-size: 25px">R$ @Model.Preco.ToString("F2")</span>
+                                    <span class="badge badge-secondary btn-block" style="font-size: 25px">R$ @Model.Price.ToString("F2")</span>
                                     <a asp-action="Matriculate" asp-controller="Matriculation" asp-route-CourseId="@Model.CourseId" class="btn btn-outline-info btn-block" style="font-size: 25px">Matricular-se</a>
                                 </div>
                             </div>
@@ -82,7 +81,7 @@
 
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted">Última atualização em @Model.DataAtualizacao.ToString("dd/MM/yyy")</small>
+                    <small class="text-muted">Última atualização em @Model.UpdateDate.ToString("dd/MM/yyy")</small>
                 </div>
             </div>
         </div>

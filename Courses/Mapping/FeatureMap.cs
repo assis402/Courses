@@ -10,7 +10,7 @@ namespace Courses.Mapping
         {
             builder.HasKey(u => u.FeatureId);
             builder.Property(u => u.Title).IsRequired().HasMaxLength(100);
-            builder.Property(u => u.Date).IsRequired();
+            builder.Property(u => u.CreationDate).IsRequired();
 
             builder.HasOne(a => a.User).WithMany(a => a.Features).HasForeignKey(a => a.UserId);
             builder.HasOne(a => a.Upgrade).WithMany(a => a.Features).HasForeignKey(a => a.UpgradeId);

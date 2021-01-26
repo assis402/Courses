@@ -12,7 +12,7 @@ namespace Courses.Models
         public User User { get; set; }
         public string CourseId { get; set; }
         public Course Course { get; set; }
-        public DateTime PurchaseDate { get; set; }
+        public DateTime CreationDate { get; set; }
         public double TotalValue { get; set; }
         public string ExternalIdentifier { get; set; }
     }

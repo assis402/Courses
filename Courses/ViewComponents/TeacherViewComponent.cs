@@ -16,7 +16,7 @@ namespace Courses.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(string UserId)
         {
-            return View(await _context.Users.FirstOrDefaultAsync(c => c.Id == UserId));
+            return View(await _context.Users.FirstOrDefaultAsync(c => c.UserId == UserId));
         }
 
     }

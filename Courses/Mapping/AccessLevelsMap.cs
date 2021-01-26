@@ -14,7 +14,7 @@ namespace Courses.Mapping
         {
             builder.Property(n => n.Description).IsRequired().HasMaxLength(400);
 
-            builder.ToTable("Níveis de Acesso");
+            builder.ToTable("AccessLevels");
 
         }
     }

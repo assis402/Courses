@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 350px">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Adicione uma foto</h2>
+                <h2 class="modal-title">Adicione uma Image</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -14,9 +14,9 @@
                 <div class="modal-body">
                     <div class="container-img">
                         @{
-                            if (Model.Foto != null)
+                            if (Model.Photo != null)
                             {
-                                <img src="@Url.Content(Model.Foto)" name="file" id="file" />
+                                <img src="@Url.Content(Model.Photo)" name="file" id="file" />
                             }
                             else
                             {
@@ -25,16 +25,16 @@
                         }
                     </div>
                     <div class="fields">
-                        <label asp-for="Foto" class="control-label">Selecione uma imagem</label>
+                        <label asp-for="Photo" class="control-label">Selecione uma imagem</label>
                         <div class="custom-file">
-                            <input type="hidden" asp-for="Id"/>
-                            <input asp-for="Foto" type="file" class="custom-file-input" name="file" id="file" onchange="LoadImage(this)" />
-                            <label asp-for="Foto" for="file" class="custom-file-label">Selecione uma imagem</label>
+                            <input type="hidden" asp-for="UserId"/>
+                            <input asp-for="Photo" type="file" class="custom-file-input" name="file" id="file" onchange="LoadImage(this)" />
+                            <label asp-for="Photo" for="file" class="custom-file-label">Selecione uma imagem</label>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" value="Mudar foto" class="btn btn-outline-success btn-lg btnChangePhoto"/> &nbsp;
+                    <input type="submit" value="Mudar Image" class="btn btn-outline-success btn-lg btnChangePhoto"/> &nbsp;
                     <a asp-action="Index" class="btn btn-link btn-lg">Voltar</a>
                 </div>
             </form>

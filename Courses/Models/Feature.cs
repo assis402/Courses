@@ -6,7 +6,7 @@ namespace Courses.Models
     {
         public string FeatureId { get; set; }
         public string Title { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime CreationDate { get; set; }
         public FeatureComplexibility Complexibility { get; set; }
         public FeatureStatus Status { get; set; }
         public Upgrade Upgrade { get; set; }

@@ -8,17 +8,17 @@ namespace Courses.ViewModels
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         [StringLength(100, ErrorMessage = "Use menos de 100 caracteres")]
-        public string Nome { get; set; }
+        public string Title { get; set; }
 
-        public string Foto { get; set; }
+        public string Image { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
-        public int CargaHoraria { get; set; }
+        public int CourseLoad { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
-        public string Preco { get; set; }
+        public string Price { get; set; }
     }
 }

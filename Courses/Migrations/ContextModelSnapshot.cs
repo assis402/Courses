@@ -45,7 +45,7 @@ namespace Courses.Migrations
                         .HasName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("Níveis de Acesso");
+                    b.ToTable("AccessLevels");
                 });
 
             modelBuilder.Entity("Courses.Models.Course", b =>
@@ -53,28 +53,30 @@ namespace Courses.Migrations
                     b.Property<string>("CourseId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CargaHoraria");
+                    b.Property<int>("CourseLoad");
 
-                    b.Property<DateTime>("DataAtualizacao");
-
-                    b.Property<DateTime>("DataCriacao");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("Foto")
+                    b.Property<string>("Image")
                         .IsRequired();
 
-                    b.Property<string>("Nome")
+                    b.Property<double>("Price");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200);
 
-                    b.Property<double>("Preco");
+                    b.Property<DateTime>("UpdateDate");
 
                     b.Property<string>("UserId");
 
                     b.HasKey("CourseId");
 
-                    b.ToTable("Cursos");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("Courses.Models.Feature", b =>
@@ -84,7 +86,7 @@ namespace Courses.Migrations
 
                     b.Property<int>("Complexibility");
 
-                    b.Property<DateTime>("Date");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<int>("Status");
 
@@ -112,9 +114,9 @@ namespace Courses.Migrations
 
                     b.Property<string>("CourseId");
 
-                    b.Property<string>("ExternalIdentifier");
+                    b.Property<DateTime>("CreationDate");
 
-                    b.Property<DateTime>("PurchaseDate");
+                    b.Property<string>("ExternalIdentifier");
 
                     b.Property<double>("TotalValue");
 
@@ -126,7 +128,7 @@ namespace Courses.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Matriculation");
+                    b.ToTable("Matriculations");
                 });
 
             modelBuilder.Entity("Courses.Models.Upgrade", b =>
@@ -134,7 +136,7 @@ namespace Courses.Migrations
                     b.Property<string>("UpgradeId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("Date");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -151,7 +153,7 @@ namespace Courses.Migrations
 
             modelBuilder.Entity("Courses.Models.User", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("UserId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CPF")
@@ -160,18 +162,15 @@ namespace Courses.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
-                    b.Property<DateTime>("DataAtualizacao");
-
-                    b.Property<DateTime>("DataCriacao");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(256);
-
-                    b.Property<string>("Foto");
 
                     b.Property<string>("Matricula");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100);
 
@@ -183,16 +182,20 @@ namespace Courses.Migrations
 
                     b.Property<string>("PasswordHash");
 
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<string>("Telefone")
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(30);
+
+                    b.Property<string>("Photo");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<DateTime>("UpdateDate");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.HasIndex("CPF")
                         .IsUnique();
@@ -205,7 +208,7 @@ namespace Courses.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("Alunos");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Courses.Models.Wallet", b =>
@@ -223,7 +226,7 @@ namespace Courses.Migrations
                         .IsUnique()
                         .HasFilter("[UserId] IS NOT NULL");
 
-                    b.ToTable("Carteira");
+                    b.ToTable("Wallets");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -312,6 +315,14 @@ namespace Courses.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Courses.Models.Course", b =>
+                {
+                    b.HasOne("Courses.Models.User", "User")
+                        .WithMany("Courses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Courses.Models.Feature", b =>
                 {
                     b.HasOne("Courses.Models.Upgrade", "Upgrade")
@@ -326,12 +337,12 @@ namespace Courses.Migrations
             modelBuilder.Entity("Courses.Models.Matriculation", b =>
                 {
                     b.HasOne("Courses.Models.Course", "Course")
-                        .WithMany("Alunos")
+                        .WithMany("Matriculations")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Courses.Models.User", "User")
-                        .WithMany("UserCourses")
+                        .WithMany("Matriculations")
                         .HasForeignKey("UserId");
                 });
 

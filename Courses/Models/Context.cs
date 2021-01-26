@@ -10,7 +10,7 @@ namespace Courses.Models
         public DbSet<AccessLevels> AccessLevels { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Matriculation> Matriculation { get; set; }
+        public DbSet<Matriculation> Matriculations { get; set; }
         public DbSet<Upgrade> Upgrades { get; set; }
         public DbSet<Feature> Features { get; set; }
 

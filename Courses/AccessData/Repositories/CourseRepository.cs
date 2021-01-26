@@ -15,7 +15,7 @@ namespace Courses.AccessData.Repositories
 
         public double GetPriceById(string Id)
         {
-            return _context.Courses.FirstOrDefault(c => c.CourseId == Id).Preco;
+            return _context.Courses.FirstOrDefault(c => c.CourseId == Id).Price;
         }
     }
 }

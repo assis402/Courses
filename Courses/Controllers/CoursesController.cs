@@ -62,22 +62,22 @@ namespace Courses.Controllers
                         _logger.LogInformation("Copiando arquivo para a pasta");
                         await file.CopyToAsync(fileStream);
                         _logger.LogInformation("Arquivo copiado");
-                        createCourseViewModel.Foto = "~/imagesCourses/" + nameImg;
+                        createCourseViewModel.Image = "~/imagesCourses/" + nameImg;
                     }
 
                     _logger.LogInformation("Salvando novo curso");
 
-                    createCourseViewModel.Preco = RemoveNonNumeric(createCourseViewModel.Preco);
+                    createCourseViewModel.Price = RemoveNonNumeric(createCourseViewModel.Price);
 
-                    var course = new Course
+                    Course course = new Course()
                     {
-                        Nome = createCourseViewModel.Nome,
-                        Foto = createCourseViewModel.Foto,
+                        Title = createCourseViewModel.Title,
+                        Image = createCourseViewModel.Image,
                         Description = createCourseViewModel.Description,
-                        CargaHoraria = createCourseViewModel.CargaHoraria,
-                        DataCriacao = DateTime.Now,
-                        DataAtualizacao = DateTime.Now,
-                        Preco = double.Parse(createCourseViewModel.Preco)/100,
+                        CourseLoad = createCourseViewModel.CourseLoad,
+                        CreationDate = DateTime.Now,
+                        UpdateDate = DateTime.Now,
+                        Price = double.Parse(createCourseViewModel.Price)/100,
                         UserId = createCourseViewModel.UserId
                     };
 
@@ -102,7 +102,7 @@ namespace Courses.Controllers
                 return NotFound();
             }
 
-            TempData["imagesCourses"] = course.Foto;
+            TempData["imagesCourses"] = course.Image;
 
             return View(course);
         }
@@ -123,11 +123,10 @@ namespace Courses.Controllers
             var editCourseViewModel = new EditCourseViewModel
             {
                 CourseId = course.CourseId,
-                DataAtualizacao = DateTime.Now,
-                Nome = course.Nome,
-                Foto = course.Foto,
-                Preco = course.Preco.ToString(),
-                CargaHoraria = course.CargaHoraria
+                Title = course.Title,
+                Image = course.Image,
+                Price = course.Price.ToString(),
+                CourseLoad = course.CourseLoad
             };
 
             return View(editCourseViewModel);
@@ -137,7 +136,7 @@ namespace Courses.Controllers
         // POST: Course/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("CourseId,Nome,Foto,CargaHoraria,DataCriacao,DataAtualizacao,Preco")] Course course, IFormFile file)
+        public async Task<IActionResult> Edit(string id, [Bind("CourseId,Name,Image,CourseLoad,Price")] Course course, IFormFile file)
         {
             if (id != course.CourseId)
             {
@@ -158,11 +157,11 @@ namespace Courses.Controllers
                         _logger.LogInformation("Copiando arquivo para a pasta");
                         await file.CopyToAsync(fileStream);
                         _logger.LogInformation("Arquivo copiado");
-                        course.Foto = "~/imagesCourses/" + nameImg;
+                        course.Image = "~/imagesCourses/" + nameImg;
                     }
                 }
 
-                else course.Foto = TempData["imagesCourses"].ToString();
+                else course.Image = TempData["imagesCourses"].ToString();
 
                 _logger.LogInformation("Atualizando curso");
                 await _courseRepository.Update(course);
@@ -177,7 +176,7 @@ namespace Courses.Controllers
         {
             var course = await _courseRepository.GetById(id);
 
-            string imageCourse = course.Foto;
+            string imageCourse = course.Image;
 
             imageCourse = imageCourse.Replace("~", "wwwroot");
             System.IO.File.Delete(imageCourse);

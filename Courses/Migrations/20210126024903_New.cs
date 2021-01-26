@@ -9,51 +9,7 @@ namespace Courses.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Alunos",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    Nome = table.Column<string>(maxLength: 100, nullable: false),
-                    CPF = table.Column<string>(nullable: false),
-                    Telefone = table.Column<string>(maxLength: 30, nullable: false),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    Matricula = table.Column<string>(nullable: true),
-                    DataCriacao = table.Column<DateTime>(nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(nullable: false),
-                    Foto = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Alunos", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cursos",
-                columns: table => new
-                {
-                    CourseId = table.Column<string>(nullable: false),
-                    Nome = table.Column<string>(maxLength: 200, nullable: false),
-                    Foto = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    CargaHoraria = table.Column<int>(nullable: false),
-                    DataCriacao = table.Column<DateTime>(nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(nullable: false),
-                    Preco = table.Column<double>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cursos", x => x.CourseId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Níveis de Acesso",
+                name: "AccessLevels",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -64,135 +20,32 @@ namespace Courses.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Níveis de Acesso", x => x.Id);
+                    table.PrimaryKey("PK_AccessLevels", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
+                name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: false),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(maxLength: 30, nullable: false),
                     UserId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    CPF = table.Column<string>(nullable: false),
+                    Matricula = table.Column<string>(nullable: true),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: false),
+                    Photo = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserClaims_Alunos_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Alunos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
-                columns: table => new
-                {
-                    LoginProvider = table.Column<string>(nullable: false),
-                    ProviderKey = table.Column<string>(nullable: false),
-                    ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserLogins_Alunos_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Alunos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserTokens_Alunos_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Alunos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Carteira",
-                columns: table => new
-                {
-                    WalletId = table.Column<string>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
-                    Balance = table.Column<double>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Carteira", x => x.WalletId);
-                    table.ForeignKey(
-                        name: "FK_Carteira_Alunos_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Alunos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Upgrades",
-                columns: table => new
-                {
-                    UpgradeId = table.Column<string>(nullable: false),
-                    Title = table.Column<string>(maxLength: 100, nullable: false),
-                    Date = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Upgrades", x => x.UpgradeId);
-                    table.ForeignKey(
-                        name: "FK_Upgrades_Alunos_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Alunos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Matriculation",
-                columns: table => new
-                {
-                    MatriculationId = table.Column<string>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
-                    CourseId = table.Column<string>(nullable: true),
-                    PurchaseDate = table.Column<DateTime>(nullable: false),
-                    TotalValue = table.Column<double>(nullable: false),
-                    ExternalIdentifier = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Matriculation", x => x.MatriculationId);
-                    table.ForeignKey(
-                        name: "FK_Matriculation_Cursos_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Cursos",
-                        principalColumn: "CourseId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Matriculation_Alunos_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Alunos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_Users", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,10 +62,51 @@ namespace Courses.Migrations
                 {
                     table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_Níveis de Acesso_RoleId",
+                        name: "FK_AspNetRoleClaims_AccessLevels_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "Níveis de Acesso",
+                        principalTable: "AccessLevels",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
+                    ProviderDisplayName = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -227,17 +121,129 @@ namespace Courses.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_Níveis de Acesso_RoleId",
+                        name: "FK_AspNetUserRoles_AccessLevels_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "Níveis de Acesso",
+                        principalTable: "AccessLevels",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_Alunos_UserId",
+                        name: "FK_AspNetUserRoles_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "Alunos",
-                        principalColumn: "Id",
+                        principalTable: "Users",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    CourseId = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(maxLength: 200, nullable: false),
+                    Image = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    CourseLoad = table.Column<int>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.CourseId);
+                    table.ForeignKey(
+                        name: "FK_Courses_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Upgrades",
+                columns: table => new
+                {
+                    UpgradeId = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(maxLength: 100, nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Upgrades", x => x.UpgradeId);
+                    table.ForeignKey(
+                        name: "FK_Upgrades_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Wallets",
+                columns: table => new
+                {
+                    WalletId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    Balance = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Wallets", x => x.WalletId);
+                    table.ForeignKey(
+                        name: "FK_Wallets_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Matriculations",
+                columns: table => new
+                {
+                    MatriculationId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    CourseId = table.Column<string>(nullable: true),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    TotalValue = table.Column<double>(nullable: false),
+                    ExternalIdentifier = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Matriculations", x => x.MatriculationId);
+                    table.ForeignKey(
+                        name: "FK_Matriculations_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "CourseId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Matriculations_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -246,7 +252,7 @@ namespace Courses.Migrations
                 {
                     FeatureId = table.Column<string>(nullable: false),
                     Title = table.Column<string>(maxLength: 100, nullable: false),
-                    Date = table.Column<DateTime>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
                     Complexibility = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     UpgradeId = table.Column<string>(nullable: true),
@@ -262,30 +268,19 @@ namespace Courses.Migrations
                         principalColumn: "UpgradeId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Features_Alunos_UserId",
+                        name: "FK_Features_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "Alunos",
-                        principalColumn: "Id",
+                        principalTable: "Users",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Alunos_CPF",
-                table: "Alunos",
-                column: "CPF",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "EmailIndex",
-                table: "Alunos",
-                column: "NormalizedEmail");
-
-            migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
-                table: "Alunos",
-                column: "NormalizedUserName",
+                name: "RoleNameIndex",
+                table: "AccessLevels",
+                column: "NormalizedName",
                 unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -308,11 +303,9 @@ namespace Courses.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Carteira_UserId",
-                table: "Carteira",
-                column: "UserId",
-                unique: true,
-                filter: "[UserId] IS NOT NULL");
+                name: "IX_Courses_UserId",
+                table: "Courses",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Features_UpgradeId",
@@ -325,26 +318,44 @@ namespace Courses.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Matriculation_CourseId",
-                table: "Matriculation",
+                name: "IX_Matriculations_CourseId",
+                table: "Matriculations",
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Matriculation_UserId",
-                table: "Matriculation",
+                name: "IX_Matriculations_UserId",
+                table: "Matriculations",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                table: "Níveis de Acesso",
-                column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Upgrades_UserId",
                 table: "Upgrades",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_CPF",
+                table: "Users",
+                column: "CPF",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "Users",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "Users",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Wallets_UserId",
+                table: "Wallets",
+                column: "UserId",
+                unique: true,
+                filter: "[UserId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -365,25 +376,25 @@ namespace Courses.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Carteira");
-
-            migrationBuilder.DropTable(
                 name: "Features");
 
             migrationBuilder.DropTable(
-                name: "Matriculation");
+                name: "Matriculations");
 
             migrationBuilder.DropTable(
-                name: "Níveis de Acesso");
+                name: "Wallets");
+
+            migrationBuilder.DropTable(
+                name: "AccessLevels");
 
             migrationBuilder.DropTable(
                 name: "Upgrades");
 
             migrationBuilder.DropTable(
-                name: "Cursos");
+                name: "Courses");
 
             migrationBuilder.DropTable(
-                name: "Alunos");
+                name: "Users");
         }
     }
 }

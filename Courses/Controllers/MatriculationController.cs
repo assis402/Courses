@@ -35,11 +35,11 @@ namespace Courses.Controllers
 
             var matriculateViewModel = new MatriculateViewModel
             {
-                UserId = user.Id,
-                UserWalletBalance = _walletRepository.GetBalanceByUserId(user.Id),
+                UserId = user.UserId,
+                UserWalletBalance = _walletRepository.GetBalanceByUserId(user.UserId),
                 CourseId = courseId,
-                CourseName = course.Nome,
-                Price = course.Preco
+                CourseName = course.Title,
+                Price = course.Price
             };
 
             return View(matriculateViewModel);
@@ -63,7 +63,7 @@ namespace Courses.Controllers
                 }
                 else
                 {
-                    DateTime purchaseDate = DateTime.Now;
+                    DateTime CreationDate = DateTime.Now;
                     //string generatedIdentifier = GenerateIdentifier(10);
 
                     Matriculation matriculation = new Matriculation
@@ -71,7 +71,7 @@ namespace Courses.Controllers
                         UserId = matriculateViewModel.UserId,
                         CourseId = matriculateViewModel.CourseId,
                         TotalValue = matriculateViewModel.Price,
-                        PurchaseDate = purchaseDate,
+                        CreationDate = CreationDate,
                         ExternalIdentifier = null
                     };
 
@@ -79,7 +79,7 @@ namespace Courses.Controllers
                     //string subject = "Matrícula concluída com sucesso";
 
                     // string message = string.Format("Seu veículo já o aguarda. Você poderá pegá-lo dia {0}" +
-                    //   " e deverá devolvê-lo dia {1}. O preço será R${2},00. Divirtá-se !!! ", aluguel.Inicio, aluguel.Fim, aluguel.PrecoTotal);
+                    //   " e deverá devolvê-lo dia {1}. O preço será R${2},00. Divirtá-se !!! ", aluguel.Inicio, aluguel.Fim, aluguel.PriceTotal);
 
                     //  await _email.EnviarEmail(usuario.Email, assunto, mensagem);
 

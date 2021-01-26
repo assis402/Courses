@@ -22,16 +22,16 @@
 
                             <div class="fields">
                                 <div class="form-group">
-                                    <label asp-for="Nome" class="control-label">Título</label>
-                                    <input asp-for="Nome" class="form-control form-control-lg" />
-                                    <span asp-validation-for="Nome" class="text-danger"></span>
+                                    <label asp-for="Title" class="control-label">Título</label>
+                                    <input asp-for="Title" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Title" class="text-danger"></span>
                                 </div>
                             </div>
 
                             <div class="fields">
                                 <div class="form-group">
-                                    <label asp-for="CargaHoraria" class="control-label" for="SelectCargaHoraria">Carga Horária Total (horas)</label>
-                                    <select asp-for="CargaHoraria" class="form-control form-control-lg" id="SelectCargaHoraria">
+                                    <label asp-for="CourseLoad" class="control-label" for="SelectCourseLoad">Carga Horária Total (horas)</label>
+                                    <select asp-for="CourseLoad" class="form-control form-control-lg" id="SelectCourseLoad">
                                         <option>80</option>
                                         <option>120</option>
                                         <option>160</option>
@@ -50,13 +50,13 @@
 
                             <div class="fields">
                                 <div class="form-group">
-                                    <label asp-for="Preco" class="control-label">Preço</label>
-                                    <input asp-for="Preco" class="form-control form-control-lg" data-inputmask="'alias': 'currency', 'prefix': 'R$ '" />
-                                    <span asp-validation-for="Preco" class="text-danger"></span>
+                                    <label asp-for="Price" class="control-label">Preço</label>
+                                    <input asp-for="Price" class="form-control form-control-lg" data-inputmask="'alias': 'currency', 'prefix': 'R$ '" />
+                                    <span asp-validation-for="Price" class="text-danger"></span>
                                 </div>
                             </div>
 
-                            <input asp-for="UserId" type="hidden" id="UserId" name="UserId" value="@user.Id" />
+                            <input asp-for="UserId" type="hidden" id="UserId" name="UserId" value="@user.UserId" />
                         </div>
 
                         <div class="col-5">
@@ -67,10 +67,10 @@
                                 </div>
                             </div>
                             <div class="fields">
-                                <label asp-for="Foto" class="control-label">Imagem da capa</label>
+                                <label asp-for="Image" class="control-label">Imagem da capa</label>
                                 <div class="custom-file">
-                                    <input asp-for="Foto" type="file" class="custom-file-input" name="file" id="file" onchange="LoadImage(this)" />
-                                    <label asp-for="Foto" for="file" class="custom-file-label">Selecione uma imagem</label>
+                                    <input asp-for="Image" type="file" class="custom-file-input" name="file" id="file" onchange="LoadImage(this)" />
+                                    <label asp-for="Image" for="file" class="custom-file-label">Selecione uma imagem</label>
                                 </div>
                             </div>
                         </div>

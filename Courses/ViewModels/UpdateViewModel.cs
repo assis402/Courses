@@ -5,21 +5,21 @@ namespace Courses.ViewModels
 {
     public class UpdateViewModel
     {
-        public string Id { get; set; }
-
-        public DateTime DataCriacao { get; set; }
-
-        public DateTime DataAtualizacao { get; set; }
+        public string UserId { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         [StringLength(100, ErrorMessage = "Use menos de 100 caracteres")]
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         public string CPF { get; set; }
 
+        public DateTime CreationDate { get; set; }
+
+        public DateTime UpdateDate { get; set; }
+
         [Required(ErrorMessage = "Campo Obrigatório")]
-        public string Telefone { get; set; }
+        public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail inválido")]

@@ -14,13 +14,14 @@ namespace Courses.Mapping
         {
             builder.HasKey(c => c.CourseId);
 
-            builder.Property(c => c.Nome).IsRequired().HasMaxLength(200);
-            builder.Property(c => c.Foto).IsRequired();
-            builder.Property(c => c.DataCriacao).IsRequired();
-            builder.Property(c => c.Preco).IsRequired();
+            builder.Property(c => c.Title).IsRequired().HasMaxLength(200);
+            builder.Property(c => c.Image).IsRequired();
+            builder.Property(c => c.CreationDate).IsRequired();
+            builder.Property(c => c.Price).IsRequired();
 
-            builder.HasMany(c => c.Alunos).WithOne(c => c.Course).OnDelete(DeleteBehavior.Cascade);
-            builder.ToTable("Cursos");
+            builder.HasOne(c => c.User).WithMany(c => c.Courses).HasForeignKey(c => c.UserId);
+            builder.HasMany(c => c.Matriculations).WithOne(c => c.Course).OnDelete(DeleteBehavior.Cascade);
+            builder.ToTable("Courses");
         }
     }
 }

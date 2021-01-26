@@ -12,7 +12,7 @@
         </div>
         <img class="card-img-top" src="~/images/default.png" alt="Card image cap">
         <div class="card-body">
-            <h4 class="card-title"><b>@Model.Nome</b></h4>
+            <h4 class="card-title"><b>@Model.Name</b></h4>
             <p class="card-text">Professor</p>
         </div>
         <ul class="list-group list-group-flush">
@@ -57,12 +57,12 @@
                     <div class="input-group-prepend border-light">
                         <span class="input-group-text border-light" id="inputGroup-sizing-default" style="background-color: white; width: 100px">Data criação</span>
                     </div>
-                    <span class="input-group-text border-light" id="inputGroup-sizing-default" style="background-color: white">@Model.DataCriacao.ToString("dd/MM/yyy")</span>
+                    <span class="input-group-text border-light" id="inputGroup-sizing-default" style="background-color: white">@Model.CreationDate.ToString("dd/MM/yyy")</span>
                 </div>
             </li>
         </ul>
         <div class="card-footer">
-            <small class="text-muted">Última atualização em @Model.DataAtualizacao.ToString("dd/MM/yyy")</small>
+            <small class="text-muted">Última atualização em @Model.UpdateDate.ToString("dd/MM/yyy")</small>
         </div>
     </div>
 </div>

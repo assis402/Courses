@@ -15,12 +15,12 @@
                     </h3>
                 </div>
                 <div class="card-body" style="padding: 0;">
-                    <a class="btn btn-light secondary float-buttom" data-toggle="tooltip" data-placement="top" title="Mudar foto" onclick="ChangePhoto('@Model.Id', '@Model.Nome', '@controller')"><i class="fas fa-edit fa-lg"></i></a>
+                    <a class="btn btn-light secondary float-buttom" data-toggle="tooltip" data-placement="top" title="Mudar foto" onclick="ChangePhoto('@Model.UserId', '@Model.Name', '@controller')"><i class="fas fa-edit fa-lg"></i></a>
                     @{
-                        if (Model.Foto != null)
+                        if (Model.Photo != null)
                         {
                             <div class="container-img">
-                                <img src="@Url.Content(Model.Foto)" />
+                                <img src="@Url.Content(Model.Photo)" />
                             </div>
                         }
                         else
@@ -31,7 +31,7 @@
                 </div>
                 
                 <div class="card-body">
-                    <h4 class="card-title"><b>@Model.Nome</b></h4>
+                    <h4 class="card-title"><b>@Model.Name</b></h4>
                     <p class="card-text">Aluno</p>
                 </div>
                 <ul class="list-group list-group-flush">
@@ -67,7 +67,7 @@
                             <div class="input-group-prepend border-light">
                                 <span class="input-group-text border-light" id="inputGroup-sizing-default" style="background-color: white; width: 100px">Telefone</span>
                             </div>
-                            <input asp-for="Telefone" style="background-color: white" readonly type="text" class="border-light form-control telefone" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            <input asp-for="PhoneNumber" style="background-color: white" readonly type="text" class="border-light form-control phoneNumber" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                         </div>
                     </li>
 
@@ -76,7 +76,7 @@
                             <div class="input-group-prepend border-light">
                                 <span class="input-group-text border-light" id="inputGroup-sizing-default" style="background-color: white; width: 100px">Data criação</span>
                             </div>
-                            <span class="input-group-text border-light" id="inputGroup-sizing-default" style="background-color: white">@Model.DataCriacao.ToString("dd/MM/yyy")</span>
+                            <span class="input-group-text border-light" id="inputGroup-sizing-default" style="background-color: white">@Model.CreationDate.ToString("dd/MM/yyy")</span>
                         </div>
                     </li>
                 </ul>
@@ -84,18 +84,18 @@
                 <div class="card-body">
                     @{ if (User.IsInRole("Administrador"))
                         {
-                            <a asp-action="Update" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-outline-info">Editar dados</a>
-                            <a asp-action="Promote" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-light" disabled>Promover</a>
+                            <a asp-action="Update" asp-controller="Users" asp-route-UserId="@Model.UserId" class="btn btn-outline-info">Editar dados</a>
+                            <a asp-action="Promote" asp-controller="Users" asp-route-UserId="@Model.UserId" class="btn btn-light" disabled>Promover</a>
                         }
                         else
                         {
-                            <a asp-action="Update" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-outline-info">Editar dados</a> <text>&nbsp; &nbsp;</text>
-                            <a asp-action="Promote" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-light">Promover</a>
+                            <a asp-action="Update" asp-controller="Users" asp-route-UserId="@Model.UserId" class="btn btn-outline-info">Editar dados</a> <text>&nbsp; &nbsp;</text>
+                            <a asp-action="Promote" asp-controller="Users" asp-route-UserId="@Model.UserId" class="btn btn-light">Promover</a>
                         }
                     }
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted">Última atualização em @Model.DataAtualizacao.ToString("dd/MM/yyy")</small>
+                    <small class="text-muted">Última atualização em @Model.UpdateDate.ToString("dd/MM/yyy")</small>
                 </div>
             </div>
         </div>
@@ -108,7 +108,7 @@
                     </h3>
                 </div>
                 <div class="card-body">
-                    @await Component.InvokeAsync("UserMatriculations")
+                    @await Component.InvokeAsync("UserMatriculations", Model.Matricula)
                 </div>
             </div>
         </div>
@@ -120,8 +120,8 @@
 <partial name="_ModalChangePhoto" />
 
 @{
-    string dCriacao = Model.DataCriacao.ToString("dd/MM/yyy");
-    string dAtualizacao = Model.DataAtualizacao.ToString("dd/MM/yyy");
+    string dCriacao = Model.CreationDate.ToString("dd/MM/yyy");
+    string dAtualizacao = Model.UpdateDate.ToString("dd/MM/yyy");
 }
 
 @section Scripts{
@@ -131,8 +131,8 @@
         })
 
 
-        function ChangePhoto(id, nome, controller) {
-            $(".Nome").html(nome);
+        function ChangePhoto(id, Name, controller) {
+            $(".Name").html(Name);
 
             $(".modal").modal("show");
 
@@ -144,7 +144,7 @@
                     url: url,
                     data: { id: id },
                     success: function () {
-                        alert("Foto adicionada");
+                        alert("Image adicionada");
                         location.reload();
                     }
                 })
@@ -159,7 +159,7 @@
     <script>
         $(function () {
             $(".cpf").mask("999.999.999-99");
-            $(".telefone").mask("(99) 9 9999-9999");
+            $(".phoneNumber").mask("(99) 9 9999-9999");
         })
     </script>
 

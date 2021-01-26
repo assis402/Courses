@@ -5,9 +5,9 @@ namespace Courses.ViewModels
 {
     public class PromoteViewModel
     {
-        public string Id { get; set; }
+        public string UserId { get; set; }
 
-        public DateTime DataAtualizacao { get; set; }
+        public DateTime UpdateDate { get; set; }
 
         public string AccessLevel { get; set; }
 
