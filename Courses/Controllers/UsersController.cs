@@ -85,7 +85,7 @@ namespace Courses.Controllers
                     await _userRepository.AssignAccessLevel(user, accessLevel);
                     _logger.LogInformation("Atribuição concluída");
 
-                    var wallet = new Wallet() { Balance = 0, User = user, UserId = user.UserId };
+                    var wallet = new Wallet() { Balance = 0, User = user, UserId = user.Id };
                     user.Wallet = wallet;
 
                     await _walletRepository.Insert(wallet);
@@ -123,7 +123,7 @@ namespace Courses.Controllers
 
             var updateViewModel = new UpdateViewModel
             {
-                UserId = user.UserId,
+                Id = user.Id,
                 CreationDate = user.CreationDate,
                 UpdateDate = DateTime.Now,
                 Name = user.Name,
@@ -143,7 +143,7 @@ namespace Courses.Controllers
             if (ModelState.IsValid)
             {
                 _logger.LogInformation("Pegando usuário pela matrícula");
-                var user = await _userRepository.GetById(updateViewModel.UserId);
+                var user = await _userRepository.GetById(updateViewModel.Id);
                 PasswordHasher<User> passwordHasher = new PasswordHasher<User>();
                 if (passwordHasher.VerifyHashedPassword(user, user.PasswordHash, updateViewModel.Password) != PasswordVerificationResult.Failed)
                 {
@@ -176,7 +176,7 @@ namespace Courses.Controllers
             var accessLevel = await _userManager.GetRolesAsync(user);
             var promoteViewModel = new PromoteViewModel
             {
-                UserId = user.UserId,
+                Id = user.Id,
                 AccessLevel = accessLevel[0],
                 UpdateDate = DateTime.Now
             };
@@ -193,7 +193,7 @@ namespace Courses.Controllers
             {
                 _logger.LogInformation("Pegando usuário pela matrícula");
 
-                var user = await _userRepository.GetById(promoteViewModel.UserId);
+                var user = await _userRepository.GetById(promoteViewModel.Id);
 
                 await _userRepository.AssignAccessLevel(user, promoteViewModel.AccessLevel);
                 _logger.LogInformation("Atribuição concluída");
@@ -209,7 +209,7 @@ namespace Courses.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePhoto(string id, [Bind("Id,Image")] User ChangePhotoUser, IFormFile file)
         {
-            if (id != ChangePhotoUser.UserId)
+            if (id != ChangePhotoUser.Id)
             {
                 _logger.LogError("Curso não encontrado");
                 return NotFound();
@@ -255,7 +255,7 @@ namespace Courses.Controllers
 
             var redefinePasswordViewModel = new RedefinePasswordViewModel
             {
-                UserId = user.UserId,
+                UserId = user.Id,
                 UpdateDate = DateTime.Now,
                 Name = user.Name,
             };
@@ -347,7 +347,7 @@ namespace Courses.Controllers
                         _logger.LogInformation("Informações corretas. Logando usurário");
                         await _userRepository.Login(user, false);
 
-                        return View("Index", user);
+                        return RedirectToAction("Index", "Home");
                     }
 
                     _logger.LogInformation("Informações inválidas");

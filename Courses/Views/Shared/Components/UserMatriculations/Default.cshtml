@@ -4,14 +4,20 @@
 <div class="row">
     @foreach (var item in Model)
     {
-        <div class="col-4">
+        <div class="col-4 course-card">
             <div class="cards">
-                <div class="card">
-                    <img src="@Url.Content(item.CourseId)" class="card-img-top img-fluid" />
-                    <div class="card-body">
-                        <h5 class="card-title">@item.CourseId</h5>
-                        <h5>Teste</h5>
-                        <h5><span class="badge badge-success">R$ Teste</span></h5>
+                <div class="cards">
+                    <div class="container-img">
+                        <img src="@Url.Content(item.Course.Image)" class="card-img-top img-fluid" />
+                    </div>
+                    <div class="card-body card-body-course">
+                        <a class="titleCourse" asp-action="Details" asp-controller="Courses" asp-route-id="@item.Course.CourseId">
+                            <h5 class="card-title"><b>@item.Course.Title</b></h5>
+
+                        </a>
+                        <h6>Matriculado em @item.Course.CreationDate.ToString("dd/MM/yyyy")</h6>
+                        <br>
+                        <a href="#" class="btn btn-outline-info btn-block">Assistir aulas</a>
                     </div>
                 </div>
             </div>

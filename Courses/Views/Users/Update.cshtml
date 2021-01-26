@@ -13,7 +13,7 @@
                 <form asp-action="Update">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <input asp-for="UserId" type="hidden" />
+                    <input asp-for="Id" type="hidden" />
 
                     <div class="fields">
                         <div class="form-group">
@@ -60,7 +60,7 @@
                         <div class="input-group mb-3">
                             <input asp-for="Password" type="password" class="form-control form-control-lg" />
                             <div class="form-group-append">
-                                <a asp-action="RedefinePassword" asp-controller="Users" asp-route-UserId="@Model.UserId" class="btn btn-outline-warning btn-lg" type="button">Redefinir</a>
+                                <a asp-action="RedefinePassword" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-outline-warning btn-lg" type="button">Redefinir</a>
                             </div>
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>

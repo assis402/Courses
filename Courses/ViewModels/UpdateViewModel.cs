@@ -5,7 +5,7 @@ namespace Courses.ViewModels
 {
     public class UpdateViewModel
     {
-        public string UserId { get; set; }
+        public string Id { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         [StringLength(100, ErrorMessage = "Use menos de 100 caracteres")]

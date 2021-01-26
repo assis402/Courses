@@ -18,11 +18,11 @@ namespace Courses.ViewComponents
             _context = context;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(string matricula)
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            User user = await _userRepository.GetUserByMatricula(matricula);
+            User user = await _userRepository.GetLoggedUser(HttpContext.User);
 
-            return View(await _context.Matriculations.Include(a => a.Course).Where(a => a.UserId == user.UserId).ToListAsync());
+            return View(await _context.Matriculations.Include(a => a.Course).Where(a => a.UserId == user.Id).ToListAsync());
         }
     }
 }

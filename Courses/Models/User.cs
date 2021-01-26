@@ -6,7 +6,6 @@ namespace Courses.Models
 {
     public class User : IdentityUser
     {
-        public string UserId { get; set; }
         public string Name { get; set; }
         public string CPF { get; set; }
         public ICollection<Matriculation> Matriculations { get; set; }
@@ -23,9 +22,9 @@ namespace Courses.Models
         {
         }
 
-        public User(string userId, string userName, string normalizedUserName, string passwordHash, string securityStamp, string name, string cPF, string phoneNumber, string email, string matricula, DateTime creationDate, DateTime updateDate, string photo)
+        public User(string id, string userName, string normalizedUserName, string passwordHash, string securityStamp, string name, string cPF, string phoneNumber, string email, string matricula, DateTime creationDate, DateTime updateDate, string photo)
         {
-            UserId = userId;
+            Id = id;
             UserName = userName;
             NormalizedUserName = normalizedUserName;
             PasswordHash = passwordHash;

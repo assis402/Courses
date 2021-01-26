@@ -1,19 +1,31 @@
-﻿@model IEnumerable<Courses.Models.Course>
+﻿@using Microsoft.AspNetCore.Identity
+
+@model IEnumerable<Courses.Models.Course>
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 @{
     ViewData["Title"] = "Cursos";
-
-    var controller = "Cursos";
-
 }
 
 <div class="my-3 courseCards bg-white rounded shadow">
     <h3 style="margin-bottom: 25px">
         <i class="fas fa-graduation-cap fa-lg"></i> Cursos &nbsp;
-        <a asp-action="Create" asp-controller="Courses" class="editClass btn btn-outline-primary px-2" data-toggle="right" title="Novo curso">
-            Novo curso &ensp;
-            <i class="fas fa-plus-circle fa-lg" aria-hidden="true"></i>
-        </a>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <a asp-action="Create" asp-controller="Courses" class="editClass btn btn-outline-primary px-2">
+                Novo curso &ensp;
+                <i class="fas fa-plus-circle fa-lg" aria-hidden="true"></i>
+            </a>
+        }
+        else
+        {
+            <button class="editClass btn btn-outline-primary px-2" data-toggle="top" title="Você precisa estar logado" disabled>
+                Novo curso &ensp;
+                <i class="fas fa-plus-circle fa-lg" aria-hidden="true"></i>
+            </button>
+        }
     </h3>
 
 
@@ -36,14 +48,15 @@
                             <h4><span class="badge badge-secondary">R$ @item.Price.ToString("F2")</span></h4>
                         </div>
                         <div class="card-footer">
-                            @if (User.IsInRole("Administrador"))
+                            @if (SignInManager.IsSignedIn(User))
                             {
-                                <a asp-action="Edit" asp-controller="Courses" asp-route-id="@item.CourseId" class="btn btn-outline-info">Atualizar</a>
-                                <a onclick="ConfirmDeletion(@item.CourseId, '@item.Title', '@controller')" class="btn btn-outline-danger">Excluir</a>
+                                /*<a asp-action="Edit" asp-controller="Courses" asp-route-id="@item.CourseId" class="btn btn-outline-info">Atualizar</a>
+                                <a onclick="ConfirmDeletion(@item.CourseId, '@item.Title', '@controller')" class="btn btn-outline-danger">Excluir</a>*/
+                                <a asp-action="Matriculate" asp-controller="Matriculation" asp-route-CourseId="@item.CourseId" class="btn btn-outline-info btn-block">Matricular-se</a>
                             }
                             else
                             {
-                                <a asp-action="Matriculate" asp-controller="Matriculation" asp-route-CourseId="@item.CourseId" class="btn btn-outline-info btn-block">Matricular-se</a>
+                                <button class="btn btn-outline-info btn-block" disabled data-toggle="top" title="Você precisa estar logado">Matricular-se</button>
                             }
                         </div>
                     </div>

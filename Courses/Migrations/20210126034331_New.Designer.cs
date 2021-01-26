@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Courses.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210126024903_New")]
+    [Migration("20210126034331_New")]
     partial class New
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -155,7 +155,7 @@ namespace Courses.Migrations
 
             modelBuilder.Entity("Courses.Models.User", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CPF")
@@ -197,7 +197,7 @@ namespace Courses.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CPF")
                         .IsUnique();

@@ -63,10 +63,6 @@
                             <p></p>
                             <div class="row btn-block bottomContent">
                                 <div class="col-12">
-                                    @if (TempData["ErrorMessage"] != null)
-                                    {
-                                    <p class="alert alert-warning">@TempData["ErrorMessage"].ToString()</p>
-                                    }
                                     <span class="badge badge-secondary btn-block" style="font-size: 25px">R$ @Model.Price.ToString("F2")</span>
                                     <a asp-action="Matriculate" asp-controller="Matriculation" asp-route-CourseId="@Model.CourseId" class="btn btn-outline-info btn-block" style="font-size: 25px">Matricular-se</a>
                                 </div>
@@ -88,10 +84,6 @@
         @await Component.InvokeAsync("Teacher", Model.UserId)
     </div>
 </div>
-
-<partial name="_ModalMatriculate" />
-
-
 
 <script>
     $(function () {

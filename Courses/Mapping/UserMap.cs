@@ -8,14 +8,13 @@ namespace Courses.Mapping
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasKey(u => u.UserId);
+            builder.HasKey(u => u.Id);
             builder.Property(u => u.Name).IsRequired().HasMaxLength(100);
             builder.Property(u => u.CPF).IsRequired();
             builder.HasIndex(u => u.CPF).IsUnique();
             builder.Property(u => u.PhoneNumber).IsRequired().HasMaxLength(30);
             builder.Property(u => u.Email).IsRequired();
 
-            builder.Ignore(u => u.Id);
             builder.Ignore(u => u.EmailConfirmed);
             builder.Ignore(u => u.AccessFailedCount);
             builder.Ignore(u => u.LockoutEnabled);

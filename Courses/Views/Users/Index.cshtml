@@ -15,7 +15,7 @@
                     </h3>
                 </div>
                 <div class="card-body" style="padding: 0;">
-                    <a class="btn btn-light secondary float-buttom" data-toggle="tooltip" data-placement="top" title="Mudar foto" onclick="ChangePhoto('@Model.UserId', '@Model.Name', '@controller')"><i class="fas fa-edit fa-lg"></i></a>
+                    <a class="btn btn-light secondary float-buttom" data-toggle="tooltip" data-placement="top" title="Mudar foto" onclick="ChangePhoto('@Model.Id', '@Model.Name', '@controller')"><i class="fas fa-edit fa-lg"></i></a>
                     @{
                         if (Model.Photo != null)
                         {
@@ -67,7 +67,7 @@
                             <div class="input-group-prepend border-light">
                                 <span class="input-group-text border-light" id="inputGroup-sizing-default" style="background-color: white; width: 100px">Telefone</span>
                             </div>
-                            <input asp-for="PhoneNumber" style="background-color: white" readonly type="text" class="border-light form-control phoneNumber" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            <input asp-for="PhoneNumber" style="background-color: white" readonly type="text" class="border-light form-control telefone" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                         </div>
                     </li>
 
@@ -84,13 +84,13 @@
                 <div class="card-body">
                     @{ if (User.IsInRole("Administrador"))
                         {
-                            <a asp-action="Update" asp-controller="Users" asp-route-UserId="@Model.UserId" class="btn btn-outline-info">Editar dados</a>
-                            <a asp-action="Promote" asp-controller="Users" asp-route-UserId="@Model.UserId" class="btn btn-light" disabled>Promover</a>
+                            <a asp-action="Update" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-outline-info">Editar dados</a>
+                            <a asp-action="Promote" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-light" disabled>Promover</a>
                         }
                         else
                         {
-                            <a asp-action="Update" asp-controller="Users" asp-route-UserId="@Model.UserId" class="btn btn-outline-info">Editar dados</a> <text>&nbsp; &nbsp;</text>
-                            <a asp-action="Promote" asp-controller="Users" asp-route-UserId="@Model.UserId" class="btn btn-light">Promover</a>
+                            <a asp-action="Update" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-outline-info">Editar dados</a> <text>&nbsp; &nbsp;</text>
+                            <a asp-action="Promote" asp-controller="Users" asp-route-UserId="@Model.Id" class="btn btn-light">Promover</a>
                         }
                     }
                 </div>
@@ -154,12 +154,12 @@
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <script src="~/test/jquery.maskedinput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
 
     <script>
         $(function () {
             $(".cpf").mask("999.999.999-99");
-            $(".phoneNumber").mask("(99) 9 9999-9999");
+            $(".telefone").mask("(99) 9 9999-9999");
         })
     </script>
 

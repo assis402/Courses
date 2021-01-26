@@ -35,8 +35,8 @@ namespace Courses.Controllers
 
             var matriculateViewModel = new MatriculateViewModel
             {
-                UserId = user.UserId,
-                UserWalletBalance = _walletRepository.GetBalanceByUserId(user.UserId),
+                UserId = user.Id,
+                UserWalletBalance = _walletRepository.GetBalanceByUserId(user.Id),
                 CourseId = courseId,
                 CourseName = course.Title,
                 Price = course.Price
@@ -53,7 +53,8 @@ namespace Courses.Controllers
                 if (await _matriculationRepository.AlreadyMatriculate(matriculateViewModel.UserId, matriculateViewModel.CourseId))
                 {
                     _logger.LogInformation("Usuário já possui matrícula nesse curso");
-                    return RedirectToAction("Index", "Courses", "");
+                    TempData["ErrorMessage"] = "Você já está matriculado neste curso";
+                    return View(matriculateViewModel);
                 }
                 else if (matriculateViewModel.Price > matriculateViewModel.UserWalletBalance)
                 {
@@ -92,7 +93,7 @@ namespace Courses.Controllers
                     await _walletRepository.Update(userWallet);
                     _logger.LogInformation("Saldo atualizado");
 
-                    return RedirectToAction("Index", "Courses");
+                    return RedirectToAction("Index", "Users");
                 }
             }
             _logger.LogInformation("Informações inválidas");

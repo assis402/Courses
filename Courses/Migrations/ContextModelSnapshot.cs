@@ -153,7 +153,7 @@ namespace Courses.Migrations
 
             modelBuilder.Entity("Courses.Models.User", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CPF")
@@ -195,7 +195,7 @@ namespace Courses.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CPF")
                         .IsUnique();
